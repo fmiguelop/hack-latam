@@ -16,7 +16,7 @@ import { AiInsightsSkeleton } from "./AiInsightsSkeleton";
 import { AiInsightsStructuredReport } from "./AiInsightsStructuredReport";
 
 const DEFAULT_PANEL_DISCLAIMER =
-  "El texto de IA es orientativo. Estas comprobaciones son pasivas e incompletas — verifica los hallazgos en tu entorno.";
+  "La IA ofrece texto de apoyo a partir de hallazgos ya medidos aquí: no ejecuta cambios ni garantiza seguridad futura ni sustituye una revisión técnica completa.";
 
 export type AiInsightsColumnProps = {
   loading: boolean;
@@ -50,16 +50,19 @@ export function AiInsightsColumn({
   );
 
   return (
-    <Card className="gap-0 border border-border py-4 shadow-sm" aria-label="Insights con IA">
+    <Card
+      className="gap-0 border border-border py-4 shadow-sm"
+      aria-label="Orientación con IA desde hallazgos"
+    >
       <CardContent className="flex flex-col gap-4 p-4 px-5">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Insights con IA
+              Orientación IA (persona siempre primero)
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Resumen de remediación bajo demanda; no sustituye verificación técnica
-              interna.
+              La IA solo reorganiza tus hallazgos en pasos verificables; tú
+              ejecutas cambios después de revisar política técnica.
             </p>
           </div>
           <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-start">
@@ -72,7 +75,11 @@ export function AiInsightsColumn({
               size="lg"
               className="min-h-11 cursor-pointer rounded-lg px-4 py-2 text-sm"
             >
-              {loading ? "Generando…" : result ? "Actualizar resultado" : "Generar"}
+              {loading
+                ? "Generando…"
+                : result
+                  ? "Regenerar orientación IA"
+                  : "Generar orientación desde hallazgos"}
             </Button>
             {result ? (
               <Button
@@ -84,7 +91,7 @@ export function AiInsightsColumn({
                 }}
                 title="Fuerza una nueva llamada al modelo ignorando la caché temporal (consumo/coste de tokens)."
                 size="lg"
-                className="min-h-11 rounded-lg border-amber-300 bg-amber-50 px-4 py-2 text-amber-900 hover:bg-amber-100 disabled:opacity-45"
+                className="min-h-11 rounded-lg border-sky-500/50 bg-sky-950/50 px-4 py-2 text-sky-100 hover:bg-sky-900/55 disabled:opacity-45"
               >
                 Nueva generación (coste modelo)
               </Button>
@@ -95,7 +102,7 @@ export function AiInsightsColumn({
         {servedFromCache && result && !loading ? (
           <p className="rounded-lg border border-accent/25 bg-accent/5 p-3 text-xs leading-relaxed text-foreground">
             Resultado desde caché temporal (menos de 24h). Usa{" "}
-            <strong className="text-amber-800">nueva generación (coste modelo)</strong>
+            <strong className="text-sky-200">nueva generación (coste modelo)</strong>
             {" "}
             si quieres recomputar aunque coincida la clave.
           </p>
@@ -113,7 +120,7 @@ export function AiInsightsColumn({
 
         {error && !loading ? (
           <p
-            className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+            className="rounded-lg border border-red-500/40 bg-red-950/45 p-3 text-sm text-red-100"
             role="alert"
           >
             {error}

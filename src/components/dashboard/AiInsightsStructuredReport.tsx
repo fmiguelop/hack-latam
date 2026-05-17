@@ -37,11 +37,11 @@ function confidenceLabelEs(c: AiInsightsConfidence): string {
 function priorityTone(p: AiInsightsTopAction["priority"]): string {
   switch (p) {
     case "critical":
-      return "border-red-200 bg-red-50 text-red-900";
+      return "border-red-500/40 bg-red-950/45 text-red-50";
     case "medium":
-      return "border-amber-200 bg-amber-50 text-amber-900";
+      return "border-sky-500/35 bg-sky-950/40 text-sky-50";
     case "low":
-      return "border-emerald-200 bg-emerald-50 text-emerald-900";
+      return "border-emerald-500/35 bg-emerald-950/35 text-emerald-50";
     default: {
       const _n: never = p;
       return _n;

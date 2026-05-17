@@ -10,7 +10,7 @@ function moduleStatusDot(status: ScanModuleResult["status"]): string {
     case "error":
       return "bg-red-500";
     case "skipped":
-      return "bg-amber-500";
+      return "bg-slate-500";
     default: {
       const _x: never = status;
       return _x;

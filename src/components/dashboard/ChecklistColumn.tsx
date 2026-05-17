@@ -12,11 +12,11 @@ import { FindingDetailBlocks } from "./FindingDetailBlocks";
 function statusStyles(status: ChecklistStatus): string {
   switch (status) {
     case "pass":
-      return "border-emerald-200 bg-emerald-50 text-emerald-900";
+      return "border-emerald-500/40 bg-emerald-950/35 text-emerald-100";
     case "warn":
-      return "border-amber-200 bg-amber-50 text-amber-900";
+      return "border-sky-500/35 bg-sky-950/40 text-sky-100";
     case "fail":
-      return "border-red-200 bg-red-50 text-red-900";
+      return "border-red-500/40 bg-red-950/45 text-red-100";
     default: {
       const _e: never = status;
       return _e;
@@ -44,7 +44,7 @@ function badgeClasses(status: ChecklistStatus): string {
     case "pass":
       return "bg-emerald-600 text-white";
     case "warn":
-      return "bg-amber-600 text-white";
+      return "bg-sky-600 text-white";
     case "fail":
       return "bg-red-600 text-white";
     default: {

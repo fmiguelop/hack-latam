@@ -1,23 +1,26 @@
 import { ConvexClerkProvider } from "@/components/providers/ConvexClerkProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Hack LATAM — Superficie externa pasiva para PYMEs",
+  title: "Hack LATAM — Instantáneo pasivo de huella observable para PYMEs",
   description:
-    "Comprueba en segundos qué se ve en público sobre tu dominio (transparencia de certificados, correo DNS, HTTPS). Sin explotación. Blog y guías orientadas a defensa.",
+    "Cuando eliges modo y ejecutas el escaneo, obtienes un resultado determinístico a partir de señales públicas: correo en DNS (SPF/DMARC/DKIM), HTTPS en :443 y, en modo profundo, huella por transparencia de certificados. Sin explotación ni inventario garantizado; la IA opcional solo orienta sobre los hallazgos.",
 };
 
 export default function RootLayout({
@@ -28,11 +31,14 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ClerkProvider dynamic>
-          <ConvexClerkProvider>{children}</ConvexClerkProvider>
+          <ThemeProvider>
+            <ConvexClerkProvider>{children}</ConvexClerkProvider>
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>

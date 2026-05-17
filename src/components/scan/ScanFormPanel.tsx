@@ -42,20 +42,14 @@ export function ScanFormPanel({
   return (
     <div className="mx-auto w-full max-w-2xl text-center">
       <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
-        Revisa tu{" "}
-        <span className="font-semibold text-primary">
-          superficie externa pública
-        </span>
+        Instantáneo sobre tu{" "}
+        <span className="font-semibold text-primary">huella observable</span>
       </h1>
       <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-        Introduce el dominio o URL de propiedades que puedas escanear por
-        ley/política. Solo datos públicos y acuerdos HTTPS normales (puerto{" "}
-        <span className="font-mono">443</span>
-        ) — sin explotación. El modo{" "}
-        <span className="font-semibold text-accent">rápido</span> sirve como
-        comprobación prioritaria; el{" "}
-        <span className="font-semibold text-accent">profundo</span> activa todas
-        las comprobaciones pasivas del servidor y necesita cuenta.
+        Introduce dominio o URL que puedas analizar por ley o acuerdo. Consultamos solo lo que un observador externo también vería mediante DNS y HTTPS (puerto{" "}
+        <span className="font-mono">443</span>). El modo{" "}
+        <span className="font-semibold text-accent">rápido</span> omite parte de la huella por transparencia de certificados y filtra hallazgos de severidad baja para dejarte lo urgente primero; el modo{" "}
+        <span className="font-semibold text-accent">profundo</span> ejecuta los seis módulos pasivos, muestra checklist técnica y requiere iniciar sesión.
       </p>
 
       <form onSubmit={onSubmit} className="mt-10 space-y-6 text-left">
@@ -79,7 +73,7 @@ export function ScanFormPanel({
             placeholder="example.com o https://www.example.com"
             maxLength={256}
             disabled={loading}
-            className="min-h-16 w-full rounded-xl border-input bg-background px-5 py-5 font-mono text-base transition-[box-shadow,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="min-h-16 w-full rounded-lg border-input bg-background px-5 py-5 font-mono text-base transition-[box-shadow,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             autoComplete="off"
           />
         </div>
@@ -90,12 +84,12 @@ export function ScanFormPanel({
               {
                 id: "deep" as const,
                 title: "Profundo",
-                desc: "Todos los módulos pasivos y checklist técnico (requiere cuenta).",
+                desc: "Los seis módulos pasivos + checklist técnica (cuenta iniciada).",
               },
               {
                 id: "quick" as const,
                 title: "Rápido",
-                desc: "Omitimos parte de CT y los hallazgos de nivel bajo: prioriza lo urgente.",
+                desc: "Menos cobertura: sin parte de huella CT y sin hallazgos de nivel bajo en la respuesta.",
               },
             ] as const
           ).map((opt) => (
@@ -106,7 +100,7 @@ export function ScanFormPanel({
               onClick={() => onScanModeChange(opt.id)}
               disabled={loading}
               className={cn(
-                "flex h-auto w-full shrink-0 cursor-pointer items-start justify-start gap-2.5 rounded-xl border border-border bg-card p-3 text-left font-normal shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                "flex h-auto w-full shrink-0 cursor-pointer items-start justify-start gap-2.5 rounded-lg border border-border bg-card p-3 text-left font-normal shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 scanMode === opt.id
                   ? "border-primary ring-1 ring-primary/25"
                   : "opacity-90 hover:border-input",
@@ -128,7 +122,7 @@ export function ScanFormPanel({
                   {opt.desc}
                 </p>
                 {opt.id === "deep" && !isAuthenticated ? (
-                  <p className="mt-2 text-[11px] leading-snug text-amber-800">
+                  <p className="mt-2 text-[11px] leading-snug text-sky-200">
                     <SignInButton mode="modal">
                       <span className="underline decoration-accent/70 underline-offset-2 transition-colors hover:text-accent">
                         Inicia sesión
@@ -156,22 +150,21 @@ export function ScanFormPanel({
         </div>
 
         <p className="rounded-lg border border-border bg-muted/40 px-3 py-3 text-xs leading-relaxed text-muted-foreground">
-          Solo analiza dominios de tu empresa o sobre los que tengas autorización
-          por escrito o contrato equivalente.
+          Usa solo objetivos de tu empresa o para los que tengas autorización escrita equivalente — no ejecutamos vigilancia ni detección de intrusión en tiempo real.
         </p>
 
         <Button
           type="submit"
           disabled={loading || !target.trim() || deepRequiresAuth}
           size="lg"
-          className="flex min-h-14 w-full cursor-pointer gap-2 rounded-xl text-base transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40"
+          className="flex min-h-14 w-full cursor-pointer gap-2 rounded-lg text-base transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40"
         >
-          {loading ? "Analizando…" : "Ejecutar análisis pasivo"}
+          {loading ? "Ejecutando módulos…" : "Lanzar comprobaciones pasivas"}
           {!loading ? <span aria-hidden>→</span> : null}
         </Button>
 
         {deepRequiresAuth ? (
-          <p className="text-center text-sm text-amber-800" role="status">
+          <p className="text-center text-sm text-sky-200" role="status">
             Seleccionaste el modo{" "}
             <strong>profundo</strong>.{" "}
             <SignInButton mode="modal">
@@ -197,10 +190,9 @@ export function ScanFormPanel({
             aria-hidden
           />
           <p className="text-muted-foreground">
-            <span className="font-semibold text-foreground">Tip:</span> Ejemplos como{" "}
-            <span className="font-mono text-foreground">cloudflare.com</span> ayudan
-            a conocer la UI. Si solo tienes IPv4 sin hostname, omitimos huellas CT y
-            parte de TLS esperado por SNI — mejor un nombre de dominio.
+            <span className="font-semibold text-foreground">Nota práctica:</span> dominios públicos grandes (p.&nbsp;ej.{" "}
+            <span className="font-mono text-foreground">cloudflare.com</span>)
+            sirven para probar la interfaz — en producción, escanea siempre tus propios dominios autorizados. Con solo una IP sin nombre, parte de TLS vía SNI puede no comportarse igual que con un hostname claro.
           </p>
         </CardContent>
       </Card>
