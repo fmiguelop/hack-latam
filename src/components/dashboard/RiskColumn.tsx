@@ -1,5 +1,7 @@
 import { riskFindings } from "@/lib/dashboard/findings";
+import type { AiPerFindingInsight } from "@/types/ai-insights";
 import type { ScanFinding, Severity } from "@/types/scan";
+import { FindingAiInsightSnippet } from "./FindingAiInsightSnippet";
 import { FindingDetailBlocks } from "./FindingDetailBlocks";
 
 function severityBadgeClasses(severity: Severity): string {
@@ -19,9 +21,13 @@ function severityBadgeClasses(severity: Severity): string {
 
 type RiskColumnProps = {
   findings: ScanFinding[];
+  perFindingInsightsById?: Record<string, AiPerFindingInsight> | null;
 };
 
-export function RiskColumn({ findings }: RiskColumnProps) {
+export function RiskColumn({
+  findings,
+  perFindingInsightsById,
+}: RiskColumnProps) {
   const risks = riskFindings(findings);
 
   return (
@@ -64,6 +70,9 @@ export function RiskColumn({ findings }: RiskColumnProps) {
                 {finding.explanation}
               </p>
               <FindingDetailBlocks finding={finding} />
+              <FindingAiInsightSnippet
+                insight={perFindingInsightsById?.[finding.id] ?? null}
+              />
             </li>
           ))}
         </ul>

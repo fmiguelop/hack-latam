@@ -3,7 +3,9 @@ import {
   informationalFindings,
   type ChecklistStatus,
 } from "@/lib/dashboard/findings";
+import type { AiPerFindingInsight } from "@/types/ai-insights";
 import type { ScanFinding } from "@/types/scan";
+import { FindingAiInsightSnippet } from "./FindingAiInsightSnippet";
 import { FindingDetailBlocks } from "./FindingDetailBlocks";
 
 function statusStyles(status: ChecklistStatus): string {
@@ -53,9 +55,16 @@ function badgeClasses(status: ChecklistStatus): string {
 
 type ChecklistColumnProps = {
   findings: ScanFinding[];
+  checklistRowInsightsById?: Record<string, AiPerFindingInsight> | null;
+  /** Micro-insights for individual findings (used in Other signals list). */
+  perFindingInsightsById?: Record<string, AiPerFindingInsight> | null;
 };
 
-export function ChecklistColumn({ findings }: ChecklistColumnProps) {
+export function ChecklistColumn({
+  findings,
+  checklistRowInsightsById,
+  perFindingInsightsById,
+}: ChecklistColumnProps) {
   const rows = buildChecklistRows(findings);
   const info = informationalFindings(findings, { excludeModuleChecks: true });
 
@@ -89,6 +98,9 @@ export function ChecklistColumn({ findings }: ChecklistColumnProps) {
                 {row.detail ? (
                   <p className="mt-0.5 text-xs text-slate-400">{row.detail}</p>
                 ) : null}
+                <FindingAiInsightSnippet
+                  insight={checklistRowInsightsById?.[row.id] ?? null}
+                />
               </div>
             </li>
           ))}
@@ -119,6 +131,9 @@ export function ChecklistColumn({ findings }: ChecklistColumnProps) {
                 {finding.explanation}
               </p>
               <FindingDetailBlocks finding={finding} />
+              <FindingAiInsightSnippet
+                insight={perFindingInsightsById?.[finding.id] ?? null}
+              />
             </li>
           ))}
         </ul>
