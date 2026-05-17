@@ -3,9 +3,17 @@
 import { SignInButton } from "@clerk/nextjs";
 import { Zap } from "lucide-react";
 import type { FormEvent } from "react";
+import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { TargetInputKind } from "@/lib/recon/normalize-target";
@@ -79,9 +87,30 @@ export function ScanFormPanel({
     Boolean(apexDomain) &&
     verification?.status !== "verified";
 
+  const [verifyModalOpen, setVerifyModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (verification?.status === "verified") {
+      setVerifyModalOpen(false);
+    }
+  }, [verification?.status]);
+
+  function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (loading || !target.trim()) return;
+    if (deepRequiresAuth || deepIpBlocked) return;
+
+    if (deepOwnershipBlocked) {
+      setVerifyModalOpen(true);
+      return;
+    }
+
+    onSubmit(e);
+  }
+
   return (
     <div className="w-full space-y-6 text-left">
-      <form onSubmit={onSubmit} className="space-y-6">
+      <form onSubmit={handleFormSubmit} className="space-y-6">
         <div className="space-y-2">
           <label htmlFor="scan-target" className="sr-only">
             Dominio o URL
@@ -182,11 +211,7 @@ export function ScanFormPanel({
         <Button
           type="submit"
           disabled={
-            loading ||
-            !target.trim() ||
-            deepRequiresAuth ||
-            deepOwnershipBlocked ||
-            deepIpBlocked
+            loading || !target.trim() || deepRequiresAuth || deepIpBlocked
           }
           size="lg"
           className="h-12 w-full rounded-full text-sm font-semibold shadow-sm transition-colors duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-40"
@@ -210,20 +235,13 @@ export function ScanFormPanel({
         isAuthenticated &&
         apexDomain &&
         verification !== undefined &&
-        verification?.status !== "verified" &&
+        (verification === null || verification.status !== "verified") &&
         !deepIpBlocked ? (
-          <>
-            <p className="text-center text-[11px] leading-snug text-muted-foreground">
-              El modo profundo solo corre tras verificar el apex{" "}
-              <span className="font-mono text-foreground">{apexDomain}</span>.
-            </p>
-            <OwnershipVerificationSection
-              apexDomain={apexDomain}
-              verification={verification}
-              disabled={loading}
-              onVerified={onOwnershipVerified}
-            />
-          </>
+          <p className="text-center text-[11px] leading-snug text-muted-foreground">
+            Pulsa <strong className="text-foreground">Lanzar comprobaciones</strong>{" "}
+            para abrir la verificación del apex{" "}
+            <span className="font-mono text-foreground">{apexDomain}</span>.
+          </p>
         ) : null}
 
         {deepIpBlocked ? (
@@ -253,6 +271,40 @@ export function ScanFormPanel({
           </p>
         ) : null}
       </form>
+
+      <Dialog open={verifyModalOpen} onOpenChange={setVerifyModalOpen}>
+        <DialogContent className="gap-0 sm:max-w-md" showCloseButton>
+          <DialogHeader>
+            <DialogTitle>Verificar titularidad</DialogTitle>
+            <DialogDescription>
+              Demuestra control sobre{" "}
+              <span className="font-mono text-foreground">
+                {apexDomain ?? "tu dominio"}
+              </span>{" "}
+              con un registro DNS TXT o un archivo HTTPS en{" "}
+              <span className="font-mono">.well-known</span>.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4">
+            {apexDomain && verification !== undefined ? (
+              <OwnershipVerificationSection
+                apexDomain={apexDomain}
+                verification={verification}
+                disabled={loading}
+                embedded
+                onVerified={() => {
+                  setVerifyModalOpen(false);
+                  onOwnershipVerified();
+                }}
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground" role="status">
+                Comprobando estado de verificación…
+              </p>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <p className="flex items-start gap-2.5 text-[11px] leading-relaxed text-muted-foreground">
         <Zap
