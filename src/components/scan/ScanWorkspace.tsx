@@ -21,6 +21,8 @@ import {
   aggregateHostnamesFromFindings,
   buildChecklistRows,
 } from "@/lib/dashboard/findings";
+import { classifyAndNormalizeTarget } from "@/lib/recon/normalize-target";
+import { extractApexFromNormalizedHost } from "@/lib/recon/extract-apex";
 import {
   appendScanSessionHistoryEntry,
   loadScanSessionHistory,
@@ -44,6 +46,7 @@ import { ScanFormPanel, type ScanMode } from "./ScanFormPanel";
 import { ScanHistorySidebar } from "./ScanHistorySidebar";
 import { ScanMainStart } from "./ScanMainEmpty";
 import { ScanTabs, type ScanTabId } from "./ScanTabs";
+import type { VerificationSnapshot } from "./OwnershipVerificationSection";
 
 function isAiInsightsResponseBody(x: unknown): x is AiInsightsResponseBody {
   if (!x || typeof x !== "object") return false;
@@ -86,6 +89,29 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
   const [selectedHistoryId, setSelectedHistoryId] = useState<string | null>(
     null,
   );
+
+  const classifiedTarget = useMemo(
+    () => classifyAndNormalizeTarget(target),
+    [target],
+  );
+  const targetKind = classifiedTarget.kind;
+  const apexDomain =
+    targetKind === "domain"
+      ? extractApexFromNormalizedHost(classifiedTarget.normalized)
+      : null;
+
+  const convexVerificationStatus = useQuery(
+    // Ownership verification status for the current apex.
+    api.verifiedDomains.getStatus,
+    authLoaded && isSignedIn && apexDomain ? { domain: apexDomain } : "skip",
+  );
+
+  const verification: VerificationSnapshot | undefined =
+    authLoaded && isSignedIn && apexDomain
+      ? convexVerificationStatus === undefined
+        ? undefined
+        : convexVerificationStatus ?? { status: "pending", method: "dns_txt" }
+      : undefined;
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -479,6 +505,12 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
             error={error}
             authLoaded={authLoaded}
             isAuthenticated={Boolean(isSignedIn)}
+            targetKind={targetKind}
+            apexDomain={apexDomain}
+            verification={verification}
+            onOwnershipVerified={() => {
+              // `verification` is sourced from Convex; once it updates, the UI unblocks deep mode.
+            }}
           />
         </ScanMainStart>
       );
