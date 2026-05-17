@@ -60,6 +60,7 @@ Scans use **public data, DNS lookups, and a normal HTTPS handshake on port 443**
 | [Privacy & data sources](docs/privacy-and-data-sources.md) | Data sent externally |
 | [Troubleshooting](docs/troubleshooting.md) | When scans fail |
 | [Developer setup](docs/developer-setup.md) | Extending the app |
+| [Def/Acc alignment & scoring roadmap](docs/defacc-alignment-and-scoring-plan.md) | Track fit, demos, prioritized improvements |
 
 ## Scripts
 
