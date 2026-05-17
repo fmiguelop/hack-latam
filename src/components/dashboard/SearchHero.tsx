@@ -24,13 +24,13 @@ export function SearchHero({
     <div className="flex min-h-[calc(100dvh-4rem)] flex-col justify-center px-6 py-16">
       <div className="mx-auto w-full max-w-xl space-y-8 text-center">
         <header className="space-y-3">
-          <p className="text-sm font-medium uppercase tracking-widest text-emerald-500/90">
+          <p className="text-sm font-medium uppercase tracking-widest text-accent">
             Hack LATAM — Recon dashboard
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             See what the internet already knows about a domain
           </h1>
-          <p className="text-base leading-relaxed text-slate-400 sm:text-lg">
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             Passive checks only — certificate transparency names, DNS email-auth
             signals (SPF / DMARC / DKIM hints), and a simple HTTPS certificate
             readout — explained in plain language.
@@ -39,9 +39,9 @@ export function SearchHero({
 
         <form
           onSubmit={onSubmit}
-          className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-900/80 p-6 text-left shadow-xl shadow-black/20 backdrop-blur-sm"
+          className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 text-left shadow-sm"
         >
-          <label htmlFor={inputId} className="text-sm font-medium text-slate-200">
+          <label htmlFor={inputId} className="text-sm font-medium text-foreground">
             Target domain or URL
           </label>
           <Input
@@ -50,21 +50,20 @@ export function SearchHero({
             value={target}
             onChange={(e) => onTargetChange(e.target.value)}
             placeholder="example.com or https://www.example.com"
-            className="min-h-11 rounded-xl border-slate-700 bg-slate-950 px-4 py-3 font-mono text-base text-slate-50 ring-emerald-500/40 outline-none transition placeholder:text-slate-500 focus-visible:border-emerald-500/50 focus-visible:ring-2 dark:bg-slate-950"
+            className="min-h-11 rounded-xl border-input bg-background px-4 py-3 font-mono text-base"
             autoComplete="off"
             disabled={loading}
           />
           <Button
             type="submit"
-            variant="outline"
             disabled={loading || !target.trim()}
             size="lg"
-            className="inline-flex min-h-11 justify-center rounded-xl border-emerald-600/50 bg-emerald-600 text-sm font-semibold text-slate-950 hover:bg-emerald-500 hover:text-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            className="inline-flex min-h-11 justify-center rounded-xl text-sm font-semibold"
           >
             {loading ? "Scanning…" : "Start scan"}
           </Button>
           {error ? (
-            <p className="text-sm text-red-400" role="alert">
+            <p className="text-sm text-destructive" role="alert">
               {error}
             </p>
           ) : null}

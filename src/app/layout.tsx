@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#030308] text-slate-50 font-sans">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ClerkProvider dynamic>
           <ConvexClerkProvider>{children}</ConvexClerkProvider>
         </ClerkProvider>

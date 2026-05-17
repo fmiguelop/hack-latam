@@ -12,11 +12,11 @@ import { FindingDetailBlocks } from "./FindingDetailBlocks";
 function statusStyles(status: ChecklistStatus): string {
   switch (status) {
     case "pass":
-      return "border-emerald-500/25 bg-emerald-500/5 text-emerald-200";
+      return "border-emerald-200 bg-emerald-50 text-emerald-900";
     case "warn":
-      return "border-amber-500/25 bg-amber-500/5 text-amber-100";
+      return "border-amber-200 bg-amber-50 text-amber-900";
     case "fail":
-      return "border-red-500/25 bg-red-500/5 text-red-200";
+      return "border-red-200 bg-red-50 text-red-900";
     default: {
       const _e: never = status;
       return _e;
@@ -42,11 +42,11 @@ function statusLabel(status: ChecklistStatus): string {
 function badgeClasses(status: ChecklistStatus): string {
   switch (status) {
     case "pass":
-      return "bg-emerald-400 text-slate-950";
+      return "bg-emerald-600 text-white";
     case "warn":
-      return "bg-amber-400 text-slate-950";
+      return "bg-amber-600 text-white";
     case "fail":
-      return "bg-red-400 text-slate-950";
+      return "bg-red-600 text-white";
     default: {
       const _e: never = status;
       return _e;
@@ -69,17 +69,17 @@ export function ChecklistColumn({
   const info = informationalFindings(findings, { excludeModuleChecks: true });
 
   return (
-    <Card className="neon-panel gap-0 py-0 shadow-none ring-0">
+    <Card className="gap-0 border border-border py-0 shadow-sm">
       <CardContent className="flex flex-col gap-4 p-4">
-      <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400/80">
+      <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Checklist técnico
       </h2>
-      <p className="mt-1 text-sm text-slate-400">
+      <p className="mt-1 text-sm text-muted-foreground">
         Autenticación de correo y snapshot HTTPS según este escaneo.
       </p>
 
       {rows.length === 0 ? (
-        <p className="mt-4 text-sm text-slate-500">
+        <p className="mt-4 text-sm text-muted-foreground">
           No checklist rows yet (modules may have been skipped for this input).
         </p>
       ) : (
@@ -95,9 +95,9 @@ export function ChecklistColumn({
                 {statusLabel(row.status)}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-slate-50">{row.label}</p>
+                <p className="text-sm font-medium text-foreground">{row.label}</p>
                 {row.detail ? (
-                  <p className="mt-0.5 text-xs text-slate-400">{row.detail}</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{row.detail}</p>
                 ) : null}
                 <FindingAiInsightSnippet
                   insight={checklistRowInsightsById?.[row.id] ?? null}
@@ -108,11 +108,11 @@ export function ChecklistColumn({
         </ul>
       )}
 
-      <h3 className="mt-6 text-xs font-semibold uppercase tracking-wider text-slate-500">
+      <h3 className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Otras señales
       </h3>
       {info.length === 0 ? (
-        <p className="mt-2 text-sm text-slate-500">
+        <p className="mt-2 text-sm text-muted-foreground">
           No additional low-severity notes beyond the checklist.
         </p>
       ) : (
@@ -120,15 +120,15 @@ export function ChecklistColumn({
           {info.map((finding) => (
             <li
               key={finding.id}
-              className="rounded-lg border border-slate-800 bg-slate-950/40 p-3"
+              className="rounded-lg border border-border bg-muted/30 p-3"
             >
-              <p className="font-mono text-[10px] uppercase text-slate-500">
+              <p className="font-mono text-[10px] uppercase text-muted-foreground">
                 {finding.module}
               </p>
-              <p className="text-sm font-medium text-slate-200">
+              <p className="text-sm font-medium text-foreground">
                 {finding.title}
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-slate-400">
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                 {finding.explanation}
               </p>
               <FindingDetailBlocks finding={finding} />

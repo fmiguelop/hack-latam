@@ -12,13 +12,13 @@ export function BlogPreviewSection() {
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fuchsia-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             Blog
           </p>
-          <h2 className="mt-3 text-3xl font-bold text-white">
+          <h2 className="mt-3 text-3xl font-bold text-foreground">
             Fallos típicos y cómo mitigarlos
           </h2>
-          <p className="mt-2 max-w-xl text-sm text-slate-400">
+          <p className="mt-2 max-w-xl text-sm text-muted-foreground">
             Guías breves sobre los hallazgos que más vemos en escaneos pasivos.
           </p>
         </div>
@@ -26,7 +26,7 @@ export function BlogPreviewSection() {
           href="/blog"
           className={cn(
             buttonVariants({ variant: "link", size: "sm" }),
-            "font-medium text-cyan-400 hover:text-cyan-300 dark:text-cyan-400 dark:hover:text-cyan-300",
+            "font-medium text-accent",
           )}
         >
           Ver todos los artículos →
@@ -38,20 +38,20 @@ export function BlogPreviewSection() {
             <Link href={`/blog/${post.slug}`} className="block h-full">
               <Card
                 className={cn(
-                  "neon-panel h-full gap-0 py-0 shadow-none ring-0 transition hover:border-cyan-400/35 dark:hover:bg-transparent",
+                  "h-full gap-0 border border-border py-0 shadow-sm transition hover:shadow-md",
                 )}
               >
                 <CardContent className="flex h-full flex-col p-5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-cyan-400/90">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-accent">
                     {post.category}
                   </span>
-                  <h3 className="mt-3 text-lg font-semibold text-white">
+                  <h3 className="mt-3 text-lg font-semibold text-foreground">
                     {post.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                     {post.excerpt}
                   </p>
-                  <p className="mt-4 text-xs text-slate-500">
+                  <p className="mt-4 text-xs text-muted-foreground">
                     {post.readMinutes} min lectura
                   </p>
                 </CardContent>

@@ -41,16 +41,16 @@ export function ScanFormPanel({
 
   return (
     <div className="mx-auto w-full max-w-2xl text-center">
-      <h1 className="text-3xl font-bold text-white sm:text-4xl">
+      <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
         Escanear infraestructura{" "}
-        <span className="text-gradient-neon">objetivo</span>
+        <span className="font-semibold text-primary">objetivo</span>
       </h1>
-      <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+      <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
         Ingresa un dominio o URL. Solo reconocimiento pasivo — sin explotación.
         El{" "}
-        <span className="font-semibold text-cyan-300/95">escaneo rápido</span>{" "}
+        <span className="font-semibold text-accent">escaneo rápido</span>{" "}
         es libre para invitados; el{" "}
-        <span className="font-semibold text-cyan-300/95">análisis profundo</span>{" "}
+        <span className="font-semibold text-accent">análisis profundo</span>{" "}
         requiere cuenta para guardarte el historial.
       </p>
 
@@ -59,11 +59,11 @@ export function ScanFormPanel({
           <div className="mb-2 flex items-center justify-between gap-3">
             <label
               htmlFor="scan-target"
-              className="text-sm font-medium text-slate-200"
+              className="text-sm font-medium text-foreground"
             >
               Dirección objetivo
             </label>
-            <span className="font-mono text-xs tabular-nums text-cyan-400/80">
+            <span className="font-mono text-xs tabular-nums text-muted-foreground">
               {charCount}/256
             </span>
           </div>
@@ -75,7 +75,7 @@ export function ScanFormPanel({
             placeholder="example.com o https://www.example.com"
             maxLength={256}
             disabled={loading}
-            className="neon-input min-h-16 w-full rounded-xl px-5 py-5 font-mono text-base text-slate-100 placeholder:text-slate-600 transition-[box-shadow,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-cyan-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030308]"
+            className="min-h-16 w-full rounded-xl border-input bg-background px-5 py-5 font-mono text-base transition-[box-shadow,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             autoComplete="off"
           />
         </div>
@@ -102,31 +102,31 @@ export function ScanFormPanel({
               onClick={() => onScanModeChange(opt.id)}
               disabled={loading}
               className={cn(
-                "neon-panel flex h-auto w-full shrink-0 cursor-pointer items-start justify-start gap-2.5 p-3 text-left font-normal shadow-none transition-[border-color,opacity,ring] duration-200 hover:bg-cyan-500/6 hover:opacity-100 focus-visible:ring-2 focus-visible:ring-cyan-400/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030308]",
+                "flex h-auto w-full shrink-0 cursor-pointer items-start justify-start gap-2.5 rounded-xl border border-border bg-card p-3 text-left font-normal shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 scanMode === opt.id
-                  ? "border-cyan-400/50 ring-1 ring-cyan-400/30"
-                  : "opacity-80 hover:border-slate-600",
+                  ? "border-primary ring-1 ring-primary/25"
+                  : "opacity-90 hover:border-input",
               )}
             >
               <div className="min-w-0 flex-1">
-                <p className="flex flex-wrap items-center gap-1.5 font-semibold text-white">
+                <p className="flex flex-wrap items-center gap-1.5 font-semibold text-foreground">
                   {opt.title}
                   {opt.id === "deep" && !isAuthenticated ? (
                     <Badge
                       variant="outline"
-                      className="h-fit border-cyan-500/30 bg-cyan-500/10 px-1.5 py-0 text-[10px] font-bold uppercase tracking-wider text-cyan-200 hover:bg-cyan-500/10"
+                      className="h-fit border-primary/25 bg-primary/5 px-1.5 py-0 text-[10px] font-bold uppercase tracking-wider text-primary"
                     >
                       Cuenta
                     </Badge>
                   ) : null}
                 </p>
-                <p className="mt-0.5 text-[11px] leading-snug text-slate-400 sm:text-xs">
+                <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground sm:text-xs">
                   {opt.desc}
                 </p>
                 {opt.id === "deep" && !isAuthenticated ? (
-                  <p className="mt-2 text-[11px] leading-snug text-amber-200/95">
+                  <p className="mt-2 text-[11px] leading-snug text-amber-800">
                     <SignInButton mode="modal">
-                      <span className="underline decoration-cyan-400/70 underline-offset-2 transition-colors hover:text-cyan-100">
+                      <span className="underline decoration-accent/70 underline-offset-2 transition-colors hover:text-accent">
                         Inicia sesión
                       </span>
                     </SignInButton>{" "}
@@ -138,13 +138,13 @@ export function ScanFormPanel({
                 className={cn(
                   "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-200",
                   scanMode === opt.id
-                    ? "border-cyan-400 bg-cyan-400"
-                    : "border-slate-600",
+                    ? "border-primary bg-primary"
+                    : "border-muted-foreground/40",
                 )}
                 aria-hidden
               >
                 {scanMode === opt.id ? (
-                  <span className="h-2 w-2 rounded-full bg-[#030308]" />
+                  <span className="h-2 w-2 rounded-full bg-primary-foreground" />
                 ) : null}
               </span>
             </Button>
@@ -155,17 +155,17 @@ export function ScanFormPanel({
           type="submit"
           disabled={loading || !target.trim() || deepRequiresAuth}
           size="lg"
-          className="btn-gradient-neon flex min-h-14 w-full cursor-pointer gap-2 rounded-xl text-base shadow-[0_0_50px_rgba(34,211,238,0.2)] transition-[opacity,transform] duration-200 hover:brightness-105 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030308]"
+          className="flex min-h-14 w-full cursor-pointer gap-2 rounded-xl text-base transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40"
         >
           {loading ? "Escaneando…" : "Iniciar escaneo cibernético"}
           {!loading ? <span aria-hidden>→</span> : null}
         </Button>
 
         {deepRequiresAuth ? (
-          <p className="text-center text-sm text-amber-200/90" role="status">
+          <p className="text-center text-sm text-amber-800" role="status">
             Seleccionaste <strong>análisis profundo</strong>.{" "}
             <SignInButton mode="modal">
-              <span className="underline decoration-cyan-400 underline-offset-2 transition-colors hover:text-cyan-100">
+              <span className="underline decoration-accent underline-offset-2 transition-colors hover:text-accent">
                 Entra o crea una cuenta
               </span>
             </SignInButton>{" "}
@@ -174,22 +174,22 @@ export function ScanFormPanel({
         ) : null}
 
         {error ? (
-          <p className="text-center text-sm text-red-400" role="alert">
+          <p className="text-center text-sm text-destructive" role="alert">
             {error}
           </p>
         ) : null}
       </form>
 
-      <Card className="neon-panel mt-8 gap-0 border-cyan-500/25 py-0 text-left shadow-none ring-0 transition-colors duration-200 hover:border-cyan-500/35">
+      <Card className="mt-8 gap-0 border border-border py-0 text-left shadow-sm">
         <CardContent className="flex gap-3 p-4 text-sm">
           <Zap
-            className="mt-0.5 h-5 w-5 shrink-0 text-cyan-400/90"
+            className="mt-0.5 h-5 w-5 shrink-0 text-accent"
             aria-hidden
           />
-          <p className="text-slate-400">
-            <span className="font-semibold text-cyan-300">Tip:</span> Usa
+          <p className="text-muted-foreground">
+            <span className="font-semibold text-foreground">Tip:</span> Usa
             dominios como{" "}
-            <span className="font-mono text-slate-300">cloudflare.com</span> para
+            <span className="font-mono text-foreground">cloudflare.com</span> para
             probar. Las IPs omiten subdominios vía CT.
           </p>
         </CardContent>

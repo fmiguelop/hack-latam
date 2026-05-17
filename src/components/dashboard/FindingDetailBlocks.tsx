@@ -19,32 +19,32 @@ export function FindingDetailBlocks({ finding }: { finding: ScanFinding }) {
         : null;
 
     return (
-      <div className="mt-3 rounded-lg border border-slate-700/80 bg-slate-950/50 p-3 text-xs">
-        <p className="font-semibold uppercase tracking-wide text-slate-500">
+      <div className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-xs">
+        <p className="font-semibold uppercase tracking-wide text-muted-foreground">
           DNS detail — {check}
         </p>
-        <dl className="mt-2 grid gap-1 font-mono text-slate-200 [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
+        <dl className="mt-2 grid gap-1 font-mono text-foreground [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
           {present !== null ? (
             <>
-              <dt className="text-slate-500">Record</dt>
+              <dt className="text-muted-foreground">Record</dt>
               <dd>{present ? "Present" : "Not found"}</dd>
             </>
           ) : null}
           {host ? (
             <>
-              <dt className="text-slate-500">Lookup</dt>
+              <dt className="text-muted-foreground">Lookup</dt>
               <dd className="break-all">{host}</dd>
             </>
           ) : null}
           {summary ? (
             <>
-              <dt className="text-slate-500">Notes</dt>
+              <dt className="text-muted-foreground">Notes</dt>
               <dd>{summary}</dd>
             </>
           ) : null}
           {matched && matched.length > 0 ? (
             <>
-              <dt className="text-slate-500">Selectors</dt>
+              <dt className="text-muted-foreground">Selectors</dt>
               <dd className="break-all">{matched.join(", ")}</dd>
             </>
           ) : null}
@@ -66,38 +66,38 @@ export function FindingDetailBlocks({ finding }: { finding: ScanFinding }) {
         ? m.dmarcPct
         : null;
     return (
-      <div className="mt-3 rounded-lg border border-slate-700/80 bg-slate-950/50 p-3 text-xs">
-        <p className="font-semibold uppercase tracking-wide text-slate-500">
+      <div className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-xs">
+        <p className="font-semibold uppercase tracking-wide text-muted-foreground">
           Email policy — {check}
         </p>
-        <dl className="mt-2 grid gap-1 font-mono text-slate-200 [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
+        <dl className="mt-2 grid gap-1 font-mono text-foreground [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
           {host ? (
             <>
-              <dt className="text-slate-500">Lookup</dt>
+              <dt className="text-muted-foreground">Lookup</dt>
               <dd className="break-all">{host}</dd>
             </>
           ) : null}
           {spfTail ? (
             <>
-              <dt className="text-slate-500">SPF terminal</dt>
+              <dt className="text-muted-foreground">SPF terminal</dt>
               <dd>{spfTail}</dd>
             </>
           ) : null}
           {dmarcP ? (
             <>
-              <dt className="text-slate-500">DMARC p=</dt>
+              <dt className="text-muted-foreground">DMARC p=</dt>
               <dd>{dmarcP}</dd>
             </>
           ) : null}
           {dmarcPct !== null ? (
             <>
-              <dt className="text-slate-500">pct</dt>
+              <dt className="text-muted-foreground">pct</dt>
               <dd>{dmarcPct}%</dd>
             </>
           ) : null}
           {summary ? (
             <>
-              <dt className="text-slate-500">Record</dt>
+              <dt className="text-muted-foreground">Record</dt>
               <dd className="break-all">{summary}</dd>
             </>
           ) : null}
@@ -124,38 +124,38 @@ export function FindingDetailBlocks({ finding }: { finding: ScanFinding }) {
         ? m.recordCount
         : null;
     return (
-      <div className="mt-3 rounded-lg border border-slate-700/80 bg-slate-950/50 p-3 text-xs">
-        <p className="font-semibold uppercase tracking-wide text-slate-500">
+      <div className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-xs">
+        <p className="font-semibold uppercase tracking-wide text-muted-foreground">
           CAA records
         </p>
-        <dl className="mt-2 grid gap-1 font-mono text-slate-200 [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
+        <dl className="mt-2 grid gap-1 font-mono text-foreground [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
           {hostname ? (
             <>
-              <dt className="text-slate-500">Zone</dt>
+              <dt className="text-muted-foreground">Zone</dt>
               <dd className="break-all">{hostname}</dd>
             </>
           ) : null}
           {present !== null ? (
             <>
-              <dt className="text-slate-500">Records</dt>
+              <dt className="text-muted-foreground">Records</dt>
               <dd>{present ? "Present" : "None"}</dd>
             </>
           ) : null}
           {count !== null ? (
             <>
-              <dt className="text-slate-500">RR count</dt>
+              <dt className="text-muted-foreground">RR count</dt>
               <dd>{count}</dd>
             </>
           ) : null}
           {issue && issue.length > 0 ? (
             <>
-              <dt className="text-slate-500">issue</dt>
+              <dt className="text-muted-foreground">issue</dt>
               <dd className="break-all">{issue.join(", ")}</dd>
             </>
           ) : null}
           {issuewild && issuewild.length > 0 ? (
             <>
-              <dt className="text-slate-500">issuewild</dt>
+              <dt className="text-muted-foreground">issuewild</dt>
               <dd className="break-all">{issuewild.join(", ")}</dd>
             </>
           ) : null}
@@ -176,32 +176,32 @@ export function FindingDetailBlocks({ finding }: { finding: ScanFinding }) {
       typeof m.legacyTlsEnabled === "boolean" ? m.legacyTlsEnabled : null;
     const probes = Array.isArray(m.probes) ? m.probes : null;
     return (
-      <div className="mt-3 rounded-lg border border-slate-700/80 bg-slate-950/50 p-3 text-xs">
-        <p className="font-semibold uppercase tracking-wide text-slate-500">
+      <div className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-xs">
+        <p className="font-semibold uppercase tracking-wide text-muted-foreground">
           TLS version probes
         </p>
-        <dl className="mt-2 grid gap-1 font-mono text-slate-200 [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
+        <dl className="mt-2 grid gap-1 font-mono text-foreground [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
           {hostname ? (
             <>
-              <dt className="text-slate-500">Host</dt>
+              <dt className="text-muted-foreground">Host</dt>
               <dd className="break-all">{hostname}</dd>
             </>
           ) : null}
           {legacy !== null ? (
             <>
-              <dt className="text-slate-500">Legacy TLS</dt>
+              <dt className="text-muted-foreground">Legacy TLS</dt>
               <dd>{legacy ? "TLS 1.0/1.1 observed" : "Not observed"}</dd>
             </>
           ) : null}
           {supported && supported.length > 0 ? (
             <>
-              <dt className="text-slate-500">Negotiated bands</dt>
+              <dt className="text-muted-foreground">Negotiated bands</dt>
               <dd className="break-all">{supported.join(", ")}</dd>
             </>
           ) : null}
         </dl>
         {probes && probes.length > 0 ? (
-          <ul className="mt-3 space-y-1 border-t border-slate-800 pt-2 text-slate-300">
+          <ul className="mt-3 space-y-1 border-t border-border pt-2 text-foreground">
             {probes.map((p, i) => {
               if (!p || typeof p !== "object") return null;
               const row = p as Record<string, unknown>;
@@ -211,13 +211,13 @@ export function FindingDetailBlocks({ finding }: { finding: ScanFinding }) {
               const cipher = typeof row.cipher === "string" ? row.cipher : null;
               return (
                 <li key={`${v}-${i}`} className="flex flex-wrap gap-x-2 gap-y-0.5">
-                  <span className="text-slate-500">{v}</span>
+                  <span className="text-muted-foreground">{v}</span>
                   <span>{ok ? "ok" : "—"}</span>
                   {prot ? (
-                    <span className="text-slate-400">{prot}</span>
+                    <span className="text-muted-foreground">{prot}</span>
                   ) : null}
                   {cipher ? (
-                    <span className="text-slate-500 break-all">{cipher}</span>
+                    <span className="text-muted-foreground break-all">{cipher}</span>
                   ) : null}
                 </li>
               );
@@ -242,38 +242,38 @@ export function FindingDetailBlocks({ finding }: { finding: ScanFinding }) {
     }
 
     return (
-      <div className="mt-3 rounded-lg border border-slate-700/80 bg-slate-950/50 p-3 text-xs">
-        <p className="font-semibold uppercase tracking-wide text-slate-500">
+      <div className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-xs">
+        <p className="font-semibold uppercase tracking-wide text-muted-foreground">
           Certificate snapshot
         </p>
-        <dl className="mt-2 grid gap-1 font-mono text-slate-200 [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
+        <dl className="mt-2 grid gap-1 font-mono text-foreground [@media(min-width:480px)]:grid-cols-[auto_1fr] [@media(min-width:480px)]:gap-x-3">
           {hostname ? (
             <>
-              <dt className="text-slate-500">Host</dt>
+              <dt className="text-muted-foreground">Host</dt>
               <dd className="break-all">{hostname}</dd>
             </>
           ) : null}
           {validFrom ? (
             <>
-              <dt className="text-slate-500">Valid from</dt>
+              <dt className="text-muted-foreground">Valid from</dt>
               <dd>{validFrom}</dd>
             </>
           ) : null}
           {validTo ? (
             <>
-              <dt className="text-slate-500">Valid until</dt>
+              <dt className="text-muted-foreground">Valid until</dt>
               <dd>{validTo}</dd>
             </>
           ) : null}
           {daysRemaining !== null ? (
             <>
-              <dt className="text-slate-500">Days left</dt>
+              <dt className="text-muted-foreground">Days left</dt>
               <dd>{daysRemaining}</dd>
             </>
           ) : null}
           {issuer ? (
             <>
-              <dt className="text-slate-500">Issuer</dt>
+              <dt className="text-muted-foreground">Issuer</dt>
               <dd className="break-all">{issuer}</dd>
             </>
           ) : null}

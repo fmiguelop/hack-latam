@@ -8,14 +8,14 @@ export function FindingAiInsightSnippet({
   if (!insight || !insight.meaning.trim()) return null;
 
   return (
-    <div className="mt-3 rounded-lg border border-indigo-500/25 bg-indigo-950/30 p-3 text-xs leading-relaxed">
-      <p className="font-semibold uppercase tracking-wide text-indigo-300/95">
+    <div className="mt-3 rounded-lg border border-accent/20 bg-accent/5 p-3 text-xs leading-relaxed">
+      <p className="font-semibold uppercase tracking-wide text-accent">
         AI context
       </p>
-      <p className="mt-1 text-slate-300">{insight.meaning}</p>
+      <p className="mt-1 text-foreground">{insight.meaning}</p>
       {insight.verifyStep?.trim() ? (
-        <p className="mt-2 font-medium text-slate-200">
-          <span className="font-normal text-slate-500">Verify: </span>
+        <p className="mt-2 font-medium text-foreground">
+          <span className="font-normal text-muted-foreground">Verify: </span>
           {insight.verifyStep}
         </p>
       ) : null}

@@ -1,7 +1,7 @@
 import type { Feature } from "@/data/features";
 
 export function FeatureIcon({ icon }: { icon: Feature["icon"] }) {
-  const cls = "h-7 w-7 text-cyan-400";
+  const cls = "h-7 w-7 text-accent";
   switch (icon) {
     case "radar":
       return (

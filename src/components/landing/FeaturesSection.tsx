@@ -8,13 +8,13 @@ export function FeaturesSection() {
   return (
     <section id="funcionalidades" className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           Plataforma
         </p>
-        <h2 className="mt-3 text-3xl font-bold text-white">
+        <h2 className="mt-3 text-3xl font-bold text-foreground">
           Funcionalidades actuales y roadmap
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-400">
+        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
           Módulos pasivos que ya corren en el escáner y capacidades planeadas para
           la próxima iteración del hackathon.
         </p>
@@ -24,7 +24,7 @@ export function FeaturesSection() {
           <li key={feature.id}>
             <Card
               className={cn(
-                "neon-panel group gap-0 py-0 shadow-none ring-0 transition hover:border-fuchsia-500/30 hover:shadow-[0_0_30px_rgba(232,121,249,0.08)]",
+                "group gap-0 border border-border py-0 shadow-sm transition hover:shadow-md",
               )}
             >
               <CardContent className="flex flex-col p-6">
@@ -35,17 +35,17 @@ export function FeaturesSection() {
                     className={cn(
                       "shrink-0 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide shadow-none hover:bg-transparent",
                       feature.status === "live"
-                        ? "border-cyan-500/30 bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/15 dark:border-cyan-500/30"
-                        : "border-fuchsia-500/25 bg-fuchsia-500/10 text-fuchsia-300 hover:bg-fuchsia-500/10 dark:border-fuchsia-500/25",
+                        ? "border-primary/20 bg-primary/5 text-primary"
+                        : "border-muted-foreground/25 bg-muted text-muted-foreground",
                     )}
                   >
                     {feature.status === "live" ? "Activo" : "Próximo"}
                   </Badge>
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-white">
+                <h3 className="mt-4 text-lg font-semibold text-foreground">
                   {feature.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-400">
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                   {feature.description}
                 </p>
               </CardContent>

@@ -32,17 +32,17 @@ export function SiteHeader() {
   const showAuthControls = mounted && isLoaded;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-cyan-500/15 bg-[#030308]/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link href="/" className="group flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/40 bg-cyan-500/10 text-sm font-bold text-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.25)]">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-muted text-sm font-bold text-primary">
             H
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400/90">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
               Hack LATAM
             </span>
-            <span className="text-sm font-medium text-slate-200">
+            <span className="text-sm font-medium text-foreground">
               Cyber Twin Protocol
             </span>
           </span>
@@ -55,7 +55,7 @@ export function SiteHeader() {
                 href={item.href}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "lg" }),
-                  "rounded-lg px-3 py-2 text-slate-400 hover:bg-cyan-500/10 hover:text-cyan-200",
+                  "rounded-lg px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 {item.label}
@@ -66,30 +66,29 @@ export function SiteHeader() {
                 href="/scan"
                 className={cn(
                   buttonVariants({ variant: "default", size: "lg" }),
-                  "btn-gradient-neon ml-1 hidden rounded-lg px-4 py-2 sm:inline-flex",
+                  "ml-1 hidden rounded-lg px-4 py-2 sm:inline-flex",
                 )}
               >
                 Iniciar escaneo
               </Link>
             ) : null}
           </nav>
-          <div className="flex items-center gap-2 border-l border-cyan-500/15 pl-2 sm:pl-3">
+          <div className="flex items-center gap-2 border-l border-border pl-2 sm:pl-3">
             {!showAuthControls ? (
               <span
-                className="flex h-9 w-24 shrink-0 items-center justify-center rounded-lg bg-slate-800/50"
+                className="flex h-9 w-24 shrink-0 items-center justify-center rounded-lg bg-muted"
                 aria-hidden
               />
             ) : userId ? (
               <UserButton
                 appearance={{
                   variables: {
-                    colorBackground: "#0a1628",
-                    colorText: "#e2e8f0",
-                    colorTextSecondary: "#94a3b8",
+                    colorBackground: "#ffffff",
+                    colorText: "#0f172a",
+                    colorTextSecondary: "#64748b",
                   },
                   elements: {
-                    userButtonPopoverCard:
-                      "border border-cyan-500/20 bg-[#071018]",
+                    userButtonPopoverCard: "border border-border bg-card shadow-md",
                   },
                 }}
               />
@@ -99,7 +98,7 @@ export function SiteHeader() {
                   type="button"
                   variant="ghost"
                   size="lg"
-                  className="rounded-lg px-3 py-2 text-cyan-200/95 hover:bg-cyan-500/10 hover:text-cyan-100"
+                  className="rounded-lg px-3 py-2 text-foreground hover:bg-muted"
                 >
                   Entrar
                 </Button>

@@ -8,11 +8,11 @@ import { FindingDetailBlocks } from "./FindingDetailBlocks";
 function severityBadgeClasses(severity: Severity): string {
   switch (severity) {
     case "critical":
-      return "bg-red-500/15 text-red-300 ring-1 ring-red-500/30";
+      return "bg-red-100 text-red-800 ring-1 ring-red-200";
     case "medium":
-      return "bg-amber-500/15 text-amber-200 ring-1 ring-amber-500/25";
+      return "bg-amber-100 text-amber-900 ring-1 ring-amber-200";
     case "low":
-      return "bg-emerald-500/15 text-emerald-200 ring-1 ring-emerald-500/25";
+      return "bg-emerald-100 text-emerald-900 ring-1 ring-emerald-200";
     default: {
       const _e: never = severity;
       return _e;
@@ -32,17 +32,17 @@ export function RiskColumn({
   const risks = riskFindings(findings);
 
   return (
-    <Card className="neon-panel gap-0 py-0 shadow-none ring-0">
+    <Card className="gap-0 border border-border py-0 shadow-sm">
       <CardContent className="flex flex-col gap-4 p-4">
-      <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400/80">
+      <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Riesgos prioritarios
       </h2>
-      <p className="mt-1 text-sm text-slate-400">
+      <p className="mt-1 text-sm text-muted-foreground">
         Hallazgos críticos y medios que suelen atenderse primero.
       </p>
 
       {risks.length === 0 ? (
-        <p className="mt-4 rounded-lg border border-slate-800 bg-slate-950/40 p-4 text-sm text-slate-500">
+        <p className="mt-4 rounded-lg border border-border bg-muted/40 p-4 text-sm text-muted-foreground">
           No critical or medium findings for this scan. Review the checklist and
           hostnames for context.
         </p>
@@ -51,7 +51,7 @@ export function RiskColumn({
           {risks.map((finding) => (
             <li
               key={finding.id}
-              className="rounded-xl border border-slate-800 bg-slate-950/40 p-4"
+              className="rounded-xl border border-border bg-muted/30 p-4"
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span
@@ -61,14 +61,14 @@ export function RiskColumn({
                 >
                   {finding.severity}
                 </span>
-                <span className="font-mono text-xs text-slate-500">
+                <span className="font-mono text-xs text-muted-foreground">
                   {finding.module}
                 </span>
               </div>
-              <h3 className="mt-2 text-base font-semibold text-slate-50">
+              <h3 className="mt-2 text-base font-semibold text-foreground">
                 {finding.title}
               </h3>
-              <p className="mt-1 text-sm leading-relaxed text-slate-400">
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                 {finding.explanation}
               </p>
               <FindingDetailBlocks finding={finding} />

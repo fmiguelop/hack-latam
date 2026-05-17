@@ -39,7 +39,7 @@ export function ScanTabs({
     <div
       role="tablist"
       aria-label="Secciones del escáner"
-      className="flex flex-wrap gap-2 border-b border-cyan-500/15 pb-4"
+      className="flex flex-wrap gap-2 border-b border-border pb-4"
     >
       {tabs.map((tab) => {
         const isScanTab = tab.id === "scan";
@@ -57,8 +57,8 @@ export function ScanTabs({
             onClick={() => onChange(tab.id)}
             className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition ${
               isActive
-                ? "tab-active-glow"
-                : "border-slate-700/80 bg-slate-900/40 text-slate-400 hover:border-cyan-500/25 hover:text-slate-200"
+                ? "border-primary bg-primary/10 text-primary shadow-sm"
+                : "border-border bg-muted/50 text-muted-foreground hover:border-input hover:bg-muted hover:text-foreground"
             } disabled:cursor-not-allowed disabled:opacity-40`}
           >
             {tab.label}

@@ -2,34 +2,27 @@
 @import "tw-animate-css";
 
 :root {
-  /* App neon tokens (preserve for legacy classes / overrides). */
-  --neon-cyan: #22d3ee;
-  --neon-magenta: #e879f9;
-  --neon-violet: #a78bfa;
-  --panel: rgba(8, 12, 28, 0.72);
-  --panel-border: rgba(34, 211, 238, 0.22);
-
-  /* Radius + semantic tokens for shadcn/base-nova (neon-tinted dark). */
+  /* B2B clean slate / navy + sky accent */
   --radius: 0.75rem;
-  --background: #030308;
-  --foreground: #f0f4ff;
-  --card: #060614;
-  --card-foreground: #f0f4ff;
-  --popover: #060614;
-  --popover-foreground: #f0f4ff;
-  --primary: #22d3ee;
-  --primary-foreground: #030308;
-  --secondary: #1e293b;
-  --secondary-foreground: #f8fafc;
-  --muted: rgba(30, 41, 59, 0.65);
-  --muted-foreground: #94a3b8;
-  --accent: rgba(34, 211, 238, 0.12);
-  --accent-foreground: #67e8f9;
-  --destructive: #ef4444;
+  --background: #f8fafc;
+  --foreground: #020617;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f172a;
+  --primary-foreground: #f8fafc;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0284c7;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
   --destructive-foreground: #fef2f2;
-  --border: rgba(34, 211, 238, 0.18);
-  --input: rgba(34, 211, 238, 0.35);
-  --ring: rgba(34, 211, 238, 0.45);
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0f172a;
 }
 
 @theme inline {
@@ -64,68 +57,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
-}
-
-.cyber-grid {
-  background-color: #030308;
-  background-image:
-    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.cyber-glow-cyan {
-  box-shadow:
-    0 0 40px rgba(34, 211, 238, 0.15),
-    0 0 80px rgba(232, 121, 249, 0.08);
-}
-
-.text-gradient-neon {
-  background: linear-gradient(90deg, #22d3ee 0%, #a78bfa 48%, #e879f9 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.btn-gradient-neon {
-  background: linear-gradient(90deg, #22d3ee 0%, #818cf8 50%, #e879f9 100%);
-  color: #030308;
-  font-weight: 600;
-  transition: filter 0.2s, transform 0.15s;
-}
-
-.btn-gradient-neon:hover:not(:disabled) {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
-}
-
-.btn-gradient-neon:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.neon-panel {
-  border: 1px solid rgba(34, 211, 238, 0.18);
-  background: rgba(6, 10, 24, 0.75);
-  backdrop-filter: blur(12px);
-  border-radius: 1rem;
-}
-
-.neon-input {
-  border: 1px solid rgba(34, 211, 238, 0.35);
-  background: rgba(2, 6, 18, 0.9);
-  box-shadow: 0 0 24px rgba(34, 211, 238, 0.06);
-}
-
-.neon-input:focus {
-  outline: none;
-  border-color: rgba(34, 211, 238, 0.65);
-  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
-}
-
-.tab-active-glow {
-  border-color: rgba(34, 211, 238, 0.55);
-  background: rgba(34, 211, 238, 0.08);
-  color: #67e8f9;
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.12);
 }

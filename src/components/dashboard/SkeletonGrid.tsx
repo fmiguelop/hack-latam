@@ -11,24 +11,24 @@ export function ScanLoadingSkeleton({
     <div
       aria-busy="true"
       aria-live="polite"
-      className="neon-panel rounded-xl border-cyan-500/20 p-6 shadow-none ring-0"
+      className="rounded-xl border border-border bg-card p-6 shadow-sm"
     >
       {showHeading ? (
         <>
-          <p className="text-xs font-semibold uppercase tracking-wider text-cyan-500/80">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Escaneando
           </p>
-          <p className="mt-3 font-mono text-sm font-medium break-all text-cyan-300/95">
+          <p className="mt-3 font-mono text-sm font-medium break-all text-foreground">
             {domainLabel?.trim() || "—"}
           </p>
           <div className="mt-8 space-y-4">
-            <div className="h-3 motion-safe:animate-pulse rounded bg-slate-800/95" />
-            <div className="h-3 w-11/12 max-w-xl motion-safe:animate-pulse rounded bg-slate-800/85" />
-            <div className="h-3 w-10/12 max-w-lg motion-safe:animate-pulse rounded bg-slate-800/70" />
-            <div className="mt-6 h-24 motion-safe:animate-pulse rounded-lg bg-slate-800/60" />
-            <div className="h-20 motion-safe:animate-pulse rounded-lg bg-slate-800/50" />
+            <div className="h-3 motion-safe:animate-pulse rounded bg-muted" />
+            <div className="h-3 w-11/12 max-w-xl motion-safe:animate-pulse rounded bg-muted" />
+            <div className="h-3 w-10/12 max-w-lg motion-safe:animate-pulse rounded bg-muted" />
+            <div className="mt-6 h-24 motion-safe:animate-pulse rounded-lg bg-muted" />
+            <div className="h-20 motion-safe:animate-pulse rounded-lg bg-muted" />
           </div>
-          <p className="mt-6 text-xs text-slate-500">
+          <p className="mt-6 text-xs text-muted-foreground">
             Tus resultados aparecerán en las pestañas Activos, Hallazgos,
             Checklist e IA cuando termine la pasada pasiva.
           </p>
@@ -36,12 +36,12 @@ export function ScanLoadingSkeleton({
       ) : (
         <>
           <div className="space-y-4">
-            <div className="h-3 motion-safe:animate-pulse rounded bg-slate-800/95" />
-            <div className="h-3 w-11/12 max-w-xl motion-safe:animate-pulse rounded bg-slate-800/85" />
-            <div className="h-3 w-10/12 max-w-lg motion-safe:animate-pulse rounded bg-slate-800/70" />
+            <div className="h-3 motion-safe:animate-pulse rounded bg-muted" />
+            <div className="h-3 w-11/12 max-w-xl motion-safe:animate-pulse rounded bg-muted" />
+            <div className="h-3 w-10/12 max-w-lg motion-safe:animate-pulse rounded bg-muted" />
           </div>
-          <div className="mt-6 h-32 motion-safe:animate-pulse rounded-lg bg-slate-800/60" />
-          <p className="mt-4 text-xs text-slate-500">
+          <div className="mt-6 h-32 motion-safe:animate-pulse rounded-lg bg-muted" />
+          <p className="mt-4 text-xs text-muted-foreground">
             Esperando reconocimiento pasivo sobre el objetivo anterior…
           </p>
         </>

@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { AiInsightsResponseBody } from "@/types/ai-insights";
 import type { ScanResponseBody } from "@/types/scan";
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
+import { useCallback, useMemo, useState, type FormEvent } from "react";
 import { ScanFormPanel, type ScanMode } from "./ScanFormPanel";
 import { ScanTabs, type ScanTabId } from "./ScanTabs";
 
@@ -58,11 +58,12 @@ export function ScanWorkspace() {
     setAiLoading(false);
   }, []);
 
-  /** Quick scans hide the Checklist tab; avoid staying on a removed tab. */
-  useEffect(() => {
+  /** Quick scans hide Checklist; don't render that panel if state is stale. */
+  const activeTabResolved: ScanTabId = useMemo(() => {
     if (result?.mode === "quick" && activeTab === "checklist") {
-      setActiveTab("findings");
+      return "findings";
     }
+    return activeTab;
   }, [result?.mode, activeTab]);
 
   async function runScan(event: FormEvent<HTMLFormElement>) {
@@ -193,7 +194,7 @@ export function ScanWorkspace() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
       {showScanTabs ? (
         <ScanTabs
-          active={activeTab}
+          active={activeTabResolved}
           onChange={setActiveTab}
           disabled={loading}
           hasResults={Boolean(result)}
@@ -205,7 +206,7 @@ export function ScanWorkspace() {
         className={cn(showScanTabs && "mt-8")}
         role="tabpanel"
       >
-        {activeTab === "scan" ? (
+        {activeTabResolved === "scan" ? (
           <div
             className={cn(
               "transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none",
@@ -232,19 +233,19 @@ export function ScanWorkspace() {
           </div>
         ) : null}
 
-        {loading && activeTab !== "scan" ? (
+        {loading && activeTabResolved !== "scan" ? (
           <div className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-cyan-500/80">
+            <p className="text-xs font-semibold uppercase tracking-wider text-accent">
               Escaneando
             </p>
-            <p className="font-mono text-sm font-medium text-cyan-300 break-all">
+            <p className="font-mono text-sm font-medium text-foreground break-all">
               {displayTarget || target.trim() || "—"}
             </p>
             <SkeletonGrid />
           </div>
         ) : null}
 
-        {activeTab === "assets" && showResults ? (
+        {activeTabResolved === "assets" && showResults ? (
           <AssetsColumn
             displayTarget={displayTarget}
             normalizedTarget={result.normalizedTarget}
@@ -255,7 +256,7 @@ export function ScanWorkspace() {
           />
         ) : null}
 
-        {activeTab === "findings" && showResults ? (
+        {activeTabResolved === "findings" && showResults ? (
           <div className="space-y-8">
             <RiskColumn
               findings={findingsForGrid}
@@ -268,7 +269,7 @@ export function ScanWorkspace() {
           </div>
         ) : null}
 
-        {activeTab === "checklist" && showResults ? (
+        {activeTabResolved === "checklist" && showResults ? (
           <ChecklistColumn
             findings={findingsForGrid}
             checklistRowInsightsById={checklistRowMap}
@@ -276,7 +277,7 @@ export function ScanWorkspace() {
           />
         ) : null}
 
-        {activeTab === "ai" && showResults ? (
+        {activeTabResolved === "ai" && showResults ? (
           <AiInsightsColumn
             loading={aiLoading}
             error={aiError}
@@ -286,8 +287,8 @@ export function ScanWorkspace() {
           />
         ) : null}
 
-        {activeTab !== "scan" && !loading && hasScanned && !result ? (
-          <p className="neon-panel p-6 text-sm text-slate-500">
+        {activeTabResolved !== "scan" && !loading && hasScanned && !result ? (
+          <p className="rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground shadow-sm">
             El escaneo no devolvió resultados. Vuelve a la pestaña Escaneo o
             revisa el error.
           </p>

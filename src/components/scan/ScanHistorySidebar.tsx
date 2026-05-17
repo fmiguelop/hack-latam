@@ -7,7 +7,7 @@ import type { AiInsightsResponseBody } from "@/types/ai-insights";
 import type { ScanFinding, ScanResponseBody } from "@/types/scan";
 
 import { useEffect, type Dispatch, type SetStateAction } from "react";
-import { X } from "lucide-react";
+import { X, History } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -77,15 +77,15 @@ export function ScanHistorySidebar({
       <aside
         id="scan-history-panel"
         aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-[50] w-[min(20rem,calc(100vw-3rem))] border-l border-cyan-500/20 bg-[#030308]/95 shadow-[-12px_0_40px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-transform duration-200 ease-out ${open ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed inset-y-0 right-0 z-[50] w-[min(20rem,calc(100vw-3rem))] border-l border-border bg-card shadow-lg transition-transform duration-200 ease-out ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex h-full flex-col">
-          <div className="flex items-center justify-between gap-3 border-b border-cyan-500/15 px-4 py-4">
+          <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-4">
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-cyan-400/85">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Historial de escaneos
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-muted-foreground">
                 Cloud en vivo vía Convex
               </p>
             </div>
@@ -93,7 +93,7 @@ export function ScanHistorySidebar({
               type="button"
               variant="outline"
               size="sm"
-              className="shrink-0 gap-1.5 border-cyan-500/35 bg-[#071018]/90 px-3 py-2 text-xs font-medium text-cyan-100 hover:border-cyan-400/55 hover:bg-cyan-500/10 hover:text-cyan-50 dark:bg-[#071018]/90"
+              className="shrink-0 gap-1.5 px-3 py-2 text-xs font-medium"
               onClick={() => setOpen(false)}
               aria-label="Cerrar historial"
             >
@@ -142,18 +142,18 @@ export function ScanHistorySidebar({
                             },
                           )
                         }
-                        className="h-auto min-h-0 w-full flex-col items-start gap-2 rounded-xl border-slate-800/70 bg-slate-950/40 px-3 py-3 text-left hover:border-cyan-400/35 hover:bg-cyan-500/5 dark:border-slate-800/70 dark:bg-slate-950/40 dark:hover:bg-cyan-500/5"
+                        className="h-auto min-h-0 w-full flex-col items-start gap-2 rounded-xl border-border bg-muted/30 px-3 py-3 text-left hover:bg-muted"
                       >
                         <div className="flex w-full items-start justify-between gap-2">
-                          <span className="min-w-0 font-mono text-xs font-medium text-cyan-200 break-all">
+                          <span className="min-w-0 font-mono text-xs font-medium text-foreground break-all">
                             {row.normalizedTarget || row.target}
                           </span>
                           <Badge
                             variant="outline"
                             className={
                               row.scanMode === "deep"
-                                ? "border-purple-400/35 bg-purple-500/15 text-[10px] font-bold text-purple-100 hover:bg-purple-500/15 dark:border-purple-400/35"
-                                : "border-cyan-400/35 bg-cyan-500/10 text-[10px] font-bold text-cyan-50 hover:bg-cyan-500/10 dark:border-cyan-400/35"
+                                ? "border-primary/25 bg-primary/5 text-[10px] font-bold text-primary"
+                                : "border-accent/25 bg-accent/10 text-[10px] font-bold text-accent"
                             }
                           >
                             {row.scanMode === "deep" ? "Profundo" : "Rápido"}
@@ -180,11 +180,9 @@ export function ScanHistorySidebar({
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls="scan-history-panel"
-        className="fixed bottom-6 right-4 z-[55] gap-2 rounded-xl border-cyan-500/35 bg-[#071018]/95 px-4 py-2.5 font-semibold text-cyan-100 shadow-[0_0_24px_rgba(34,211,238,0.15)] backdrop-blur-md hover:border-cyan-400/50 hover:bg-cyan-500/10 sm:right-8 dark:bg-[#071018]/95 dark:hover:bg-cyan-500/10"
+        className="fixed bottom-6 right-4 z-[55] gap-2 rounded-xl border-border bg-card px-4 py-2.5 font-semibold text-foreground shadow-md hover:bg-muted sm:right-8"
       >
-        <span className="tabular-nums" aria-hidden>
-          ◈
-        </span>
+        <History className="size-4 shrink-0 opacity-80" aria-hidden />
         {open ? "Ocultar" : "Historial"}
       </Button>
     </>

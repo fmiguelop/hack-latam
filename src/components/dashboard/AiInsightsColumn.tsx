@@ -13,11 +13,11 @@ import { AiInsightsSkeleton } from "./AiInsightsSkeleton";
 function priorityTone(p: AiInsightsTopAction["priority"]): string {
   switch (p) {
     case "critical":
-      return "border-red-500/30 bg-red-500/10 text-red-200";
+      return "border-red-200 bg-red-50 text-red-900";
     case "medium":
-      return "border-amber-500/30 bg-amber-500/10 text-amber-100";
+      return "border-amber-200 bg-amber-50 text-amber-900";
     case "low":
-      return "border-emerald-500/25 bg-emerald-500/5 text-emerald-200";
+      return "border-emerald-200 bg-emerald-50 text-emerald-900";
     default: {
       const _n: never = p;
       return _n;
@@ -46,14 +46,14 @@ export function AiInsightsColumn({
   onGenerate,
 }: AiInsightsColumnProps) {
   return (
-    <Card className="neon-panel gap-0 py-4 shadow-none ring-0" aria-label="AI insights">
+    <Card className="gap-0 border border-border py-4 shadow-sm" aria-label="AI insights">
       <CardContent className="flex flex-col gap-4 p-4 px-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-cyan-400/80">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Insights con IA
           </h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-muted-foreground">
             Resumen de remediación bajo demanda — sin listas de hostnames por
             defecto.
           </p>
@@ -66,7 +66,7 @@ export function AiInsightsColumn({
               void onGenerate({ forceRefresh: false });
             }}
             size="lg"
-            className="btn-gradient-neon min-h-11 cursor-pointer rounded-lg px-4 py-2 text-sm"
+            className="min-h-11 cursor-pointer rounded-lg px-4 py-2 text-sm"
           >
             {loading ? "Generando…" : result ? "Actualizar cache" : "Generar"}
           </Button>
@@ -80,7 +80,7 @@ export function AiInsightsColumn({
               }}
               title="Ignora la caché de 24h y vuelve a llamar al modelo (consumo de tokens)."
               size="lg"
-              className="min-h-11 rounded-lg border-amber-500/35 bg-amber-500/10 px-4 py-2 text-amber-100 hover:border-amber-400/50 hover:bg-amber-500/15 disabled:opacity-45 dark:bg-amber-500/10 dark:hover:bg-amber-500/15"
+              className="min-h-11 rounded-lg border-amber-300 bg-amber-50 px-4 py-2 text-amber-900 hover:bg-amber-100 disabled:opacity-45"
             >
               Nueva IA (tokens)
             </Button>
@@ -89,14 +89,14 @@ export function AiInsightsColumn({
       </div>
 
       {servedFromCache && result && !loading ? (
-        <p className="mt-3 rounded-lg border border-cyan-500/25 bg-cyan-950/40 p-3 text-xs leading-relaxed text-cyan-100/95">
+        <p className="mt-3 rounded-lg border border-accent/25 bg-accent/5 p-3 text-xs leading-relaxed text-foreground">
           Resultado desde caché global (menos de 24h). Usa{" "}
-          <strong className="text-amber-200">Nueva IA (tokens)</strong> si quieres
+          <strong className="text-amber-800">Nueva IA (tokens)</strong> si quieres
           recomputar aunque coincida la clave.
         </p>
       ) : null}
 
-      <p className="mt-3 rounded-lg border border-slate-800/90 bg-slate-950/50 p-3 text-xs leading-relaxed text-slate-500">
+      <p className="mt-3 rounded-lg border border-border bg-muted/50 p-3 text-xs leading-relaxed text-muted-foreground">
         {DEFAULT_PANEL_DISCLAIMER}
       </p>
 
@@ -108,7 +108,7 @@ export function AiInsightsColumn({
 
       {error && !loading ? (
         <p
-          className="mt-4 rounded-lg border border-red-500/25 bg-red-950/35 p-3 text-sm text-red-300"
+          className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
           role="alert"
         >
           {error}
@@ -118,24 +118,24 @@ export function AiInsightsColumn({
       {result && !loading ? (
         <div className="mt-4 space-y-4">
           <div>
-            <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               Summary
             </h3>
-            <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-200">
+            <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-foreground">
               {result.executiveSummary}
             </p>
           </div>
 
           <div>
-            <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               Prioritized actions
             </h3>
             {result.topActions.length === 0 ? (
-              <p className="mt-2 text-sm text-slate-500">
+              <p className="mt-2 text-sm text-muted-foreground">
                 No actions returned — regenerate or review findings manually.
               </p>
             ) : (
-              <ol className="mt-2 list-decimal space-y-3 pl-4 text-sm text-slate-200">
+              <ol className="mt-2 list-decimal space-y-3 pl-4 text-sm text-foreground">
                 {result.topActions.map((action) => (
                   <li
                     key={action.id}
@@ -144,21 +144,21 @@ export function AiInsightsColumn({
                     )}`}
                   >
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-bold uppercase tracking-wide text-slate-300">
+                      <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
                         {action.priority}
                       </span>
-                      <span className="text-xs uppercase text-slate-500">
+                      <span className="text-xs uppercase text-muted-foreground">
                         confidence: {action.confidence}
                       </span>
                     </div>
-                    <p className="mt-2 font-semibold text-slate-50">
+                    <p className="mt-2 font-semibold text-foreground">
                       {action.title}
                     </p>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-300/95">
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                       {action.why}
                     </p>
-                    <p className="mt-2 text-xs font-medium text-slate-200">
-                      <span className="text-slate-500">Verify: </span>
+                    <p className="mt-2 text-xs font-medium text-foreground">
+                      <span className="font-normal text-muted-foreground">Verify: </span>
                       {action.verifyStep}
                     </p>
                   </li>
@@ -168,10 +168,10 @@ export function AiInsightsColumn({
           </div>
 
           <div>
-            <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               Limitations &amp; caveats
             </h3>
-            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs leading-relaxed text-slate-500">
+            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs leading-relaxed text-muted-foreground">
               {result.disclaimers.map((line, idx) => (
                 <li key={`${line.slice(0, 48)}-${idx}`}>{line}</li>
               ))}
@@ -179,7 +179,7 @@ export function AiInsightsColumn({
           </div>
 
           {result.modelUsed ? (
-            <p className="font-mono text-[10px] uppercase text-slate-600">
+            <p className="font-mono text-[10px] uppercase text-muted-foreground">
               Model: {result.modelUsed}
             </p>
           ) : null}

@@ -7,11 +7,11 @@ import { FindingDetailBlocks } from "./FindingDetailBlocks";
 function severityBadge(severity: Severity): string {
   switch (severity) {
     case "critical":
-      return "bg-red-500/15 text-red-300 ring-1 ring-red-500/35";
+      return "bg-red-100 text-red-800 ring-1 ring-red-200";
     case "medium":
-      return "bg-amber-500/15 text-amber-200 ring-1 ring-amber-500/30";
+      return "bg-amber-100 text-amber-900 ring-1 ring-amber-200";
     case "low":
-      return "bg-cyan-500/10 text-cyan-200 ring-1 ring-cyan-500/25";
+      return "bg-emerald-100 text-emerald-900 ring-1 ring-emerald-200";
     default: {
       const _e: never = severity;
       return _e;
@@ -32,9 +32,9 @@ export function AllFindingsPanel({
 }: AllFindingsPanelProps) {
   if (findings.length === 0) {
     return (
-      <Card className="neon-panel shadow-none ring-0">
+      <Card className="border border-border shadow-sm">
         <CardContent className="p-6">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-muted-foreground">
             Sin hallazgos en este escaneo. Revisa activos y checklist.
           </p>
         </CardContent>
@@ -51,14 +51,14 @@ export function AllFindingsPanel({
     <div className="space-y-8">
       {grouped.map((group) => (
         <section key={group.severity}>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             {group.severity}
           </h3>
           <ul className="mt-3 space-y-3">
             {group.items.map((finding) => (
               <li key={finding.id}>
-                <Card className="neon-panel gap-0 py-0 shadow-none ring-0">
-                  <CardContent className="p-4 space-y-0">
+                <Card className="gap-0 border border-border py-0 shadow-sm">
+                  <CardContent className="space-y-0 p-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className={`rounded-full px-2 py-0.5 text-xs font-semibold uppercase ${severityBadge(
@@ -67,14 +67,14 @@ export function AllFindingsPanel({
                   >
                     {finding.severity}
                   </span>
-                  <span className="font-mono text-xs text-slate-500">
+                  <span className="font-mono text-xs text-muted-foreground">
                     {finding.module}
                   </span>
                 </div>
-                <h4 className="mt-2 font-semibold text-white">
+                <h4 className="mt-2 font-semibold text-foreground">
                   {finding.title}
                 </h4>
-                <p className="mt-1 text-sm leading-relaxed text-slate-400">
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                   {finding.explanation}
                 </p>
                 <FindingDetailBlocks finding={finding} />
