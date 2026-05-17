@@ -2,7 +2,7 @@
 
 **Purpose.** Single reference for humans and AI agents: how this project fits the hackathon **`def/acc`** (defensive accelerationism) track, what is **implemented vs roadmap**, gaps that hurt demos or judges, and a **prioritized improvement backlog** oriented toward scoring.
 
-**Related docs.** [CONTEXT.md](../CONTEXT.md), [README.md](../README.md), [threat-model.md](threat-model.md), [recon-modules.md](recon-modules.md), [overview.md](overview.md).
+**Related docs.** [CONTEXT.md](../CONTEXT.md), [README.md](../README.md), [threat-model.md](threat-model.md), [recon-modules.md](recon-modules.md), [overview.md](overview.md), [AI Insights guided chat PRD](ai-chat-refinement-prd.md).
 
 ---
 
@@ -92,7 +92,7 @@ Examples: Shodan/ports, SSL Labs-style grading, WHOIS/HIBP, richer inputs — se
 1. **Audience:** SMB owner asked “¿estamos exponiendo algo obvio?”
 2. **Input:** Their **own** or organizer-approved demo domain (**deep**, signed in).
 3. **Show:** Modules table → highlights: SPF/DMARC gaps, TLS expiry or legacy TLS, hostname footprint from CT.
-4. **AI tab:** Generate insights — emphasize **verification steps** and **disclaimers**, not autonomy.
+4. **AI tab:** Generate insights — emphasize **verification steps** and **disclaimers**, not autonomy; optional **guided follow-up questions** stay grounded in the scan (see [PRD](ai-chat-refinement-prd.md)).
 5. **Close:** “Pasivo, con permiso — no pentest; próximo: historial persistente / más señales defensivas.”
 
 **Claims to avoid in voiceover:** “We detect attackers in real time,” “complete attack surface,” “replaces SOC,” “full compliance.”
@@ -122,6 +122,7 @@ Examples: Shodan/ports, SSL Labs-style grading, WHOIS/HIBP, richer inputs — se
 
 - [ ] **One flagship defensive signal** with clear SMB story — e.g. **HIBP domain breach** (with API ToS respected), **Censys/Shodan** passive host summary (keys in `.env.example` only), or **SSL Labs–style grading** analogue as documented in recon-modules roadmap.
 - [ ] **Ownership friction** — TXT verification token or Clerk org tenancy before deep scan (reduces misuse narrative for judges).
+- [ ] **AI Insights guided chat** — structured-first UI plus defensive follow-ups grounded in the scan snapshot; spec and implementation options in [ai-chat-refinement-prd.md](ai-chat-refinement-prd.md).
 
 ---
 
@@ -142,3 +143,4 @@ When picking up scoring or alignment work:
 | Date | Change |
 |------|--------|
 | 2026-05-17 | Initial memo from plan track-alignment-doc. |
+| 2026-05-17 | Linked AI Insights guided chat PRD (Tier C + related docs + demo narrative). |
