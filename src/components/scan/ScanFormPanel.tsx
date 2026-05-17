@@ -73,7 +73,7 @@ export function ScanFormPanel({
             placeholder="example.com o https://www.example.com"
             maxLength={256}
             disabled={loading}
-            className="min-h-16 w-full rounded-xl border-input bg-background px-5 py-5 font-mono text-base transition-[box-shadow,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="min-h-16 w-full rounded-lg border-input bg-background px-5 py-5 font-mono text-base transition-[box-shadow,border-color] duration-200 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             autoComplete="off"
           />
         </div>
@@ -100,7 +100,7 @@ export function ScanFormPanel({
               onClick={() => onScanModeChange(opt.id)}
               disabled={loading}
               className={cn(
-                "flex h-auto w-full shrink-0 cursor-pointer items-start justify-start gap-2.5 rounded-xl border border-border bg-card p-3 text-left font-normal shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                "flex h-auto w-full shrink-0 cursor-pointer items-start justify-start gap-2.5 rounded-lg border border-border bg-card p-3 text-left font-normal shadow-sm transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 scanMode === opt.id
                   ? "border-primary ring-1 ring-primary/25"
                   : "opacity-90 hover:border-input",
@@ -122,7 +122,7 @@ export function ScanFormPanel({
                   {opt.desc}
                 </p>
                 {opt.id === "deep" && !isAuthenticated ? (
-                  <p className="mt-2 text-[11px] leading-snug text-amber-200">
+                  <p className="mt-2 text-[11px] leading-snug text-sky-200">
                     <SignInButton mode="modal">
                       <span className="underline decoration-accent/70 underline-offset-2 transition-colors hover:text-accent">
                         Inicia sesión
@@ -157,14 +157,14 @@ export function ScanFormPanel({
           type="submit"
           disabled={loading || !target.trim() || deepRequiresAuth}
           size="lg"
-          className="flex min-h-14 w-full cursor-pointer gap-2 rounded-xl text-base transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40"
+          className="flex min-h-14 w-full cursor-pointer gap-2 rounded-lg text-base transition active:scale-[0.99] disabled:pointer-events-none disabled:opacity-40"
         >
           {loading ? "Ejecutando módulos…" : "Lanzar comprobaciones pasivas"}
           {!loading ? <span aria-hidden>→</span> : null}
         </Button>
 
         {deepRequiresAuth ? (
-          <p className="text-center text-sm text-amber-200" role="status">
+          <p className="text-center text-sm text-sky-200" role="status">
             Seleccionaste el modo{" "}
             <strong>profundo</strong>.{" "}
             <SignInButton mode="modal">

@@ -24,7 +24,7 @@ function severityPillClasses(severity: Severity): string {
     case "critical":
       return "bg-red-950/70 text-red-100 ring-1 ring-red-500/40";
     case "medium":
-      return "bg-amber-950/60 text-amber-100 ring-1 ring-amber-400/35";
+      return "bg-sky-950/60 text-sky-100 ring-1 ring-sky-400/35";
     case "low":
       return "bg-emerald-950/50 text-emerald-100 ring-1 ring-emerald-400/35";
     default: {

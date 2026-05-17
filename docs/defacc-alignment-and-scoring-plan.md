@@ -5,7 +5,7 @@
 | **Status** | Live (documentation — product backlog items vary) |
 | **Priority** | — (hub document) |
 | **Owner** | Product / Engineering |
-| **Version** | 1.1 |
+| **Version** | 1.2 |
 | **Last updated** | 2026-05-17 |
 
 **This document is the primary source of truth** for how Hack LATAM fits the hackathon **def/acc** (defensive acceleration) track, what ships today vs roadmap, and how we prioritize work for judges and operators. Satellite docs are linked from [Sub-spec registry](#12-sub-spec-registry).
@@ -90,6 +90,7 @@ Rows: product capabilities. **Status:** Implemented / Partial / Draft (spec only
 | **Roadmap modules** (Shodan, SSL Labs-style, HIBP, etc.) | **Not started** | Cybersecurity | **Med** | [recon-modules.md](recon-modules.md) roadmap |
 | **Marketing copy ↔ passive reality** | **Partial** | Disqualifiers | **Med** | Align hero/metadata — Tier A backlog |
 | **API / user docs** (6 modules, quick vs deep) | **Partial** | Credibility | **Med** | [api-reference.md](api-reference.md) reconciled with code |
+| **UI / visual identity** (Trust & Authority) | **Implemented** | Credibility / disqualifiers (“generic AI look”) | **Low–Med** | Navy + sky semantic tokens ([globals.css](../src/app/globals.css)); **Plus Jakarta Sans** + **IBM Plex Mono** for data ([layout.tsx](../src/app/layout.tsx)); sharper radii (`--radius`); medium/warning affordances use sky (not violet/amber). See §13. |
 
 ---
 
@@ -128,6 +129,7 @@ Order agreed for implementation narrative: **P1 Domain ownership → P2 Convex p
 - [ ] Harmonize **README / api-reference / user-guide** — six modules, quick vs deep.
 - [ ] **Authorized targets** checkbox + link to [threat-model.md](threat-model.md) near submit (`ScanFormPanel.tsx`).
 - [ ] **Judging deck:** reuse §5–§6 tables for Q&A.
+- [ ] **Presentation / visual trust:** keep operator/SMB tooling tone (not generic “AI SaaS” violet stacks) — baseline in §13.
 
 ### Tier B — High impact, medium cost
 
@@ -209,10 +211,25 @@ When picking up def/acc or scoring work:
 
 ---
 
-## 13. Revision log
+## 13. Presentation & UI (trust signals)
+
+Hackathon reviewers infer product seriousness partly from visuals. Hack LATAM intentionally uses a **Trust & Authority** direction (professional B2B / defensive tooling), not playful “generic AI startup” palettes.
+
+| Area | Decision | Where it lives |
+|------|-----------|----------------|
+| **Color** | Deep navy surfaces (`slate`-950-scale) + **precise sky** primaries/accent rings; destructive stays red/emerald for pass/fail; **medium** severity and “warn” states use sky tints instead of violet/amber-heavy defaults | [`src/app/globals.css`](../src/app/globals.css), dashboard badges |
+| **Typography** | **Plus Jakarta Sans** for UI copy; **IBM Plex Mono** for domains, payloads, monospace fields | [`src/app/layout.tsx`](../src/app/layout.tsx) |
+| **Shape** | Tighter `--radius` (0.5rem) and cards/tabs aligned to `rounded-lg` for a more technical feel | `globals.css`, [`card.tsx`](../src/components/ui/card.tsx) |
+
+**When extending UI:** keep semantic Tailwind/CSS variables (`primary`, `accent`, `muted`) instead of ad-hoc hex in components unless mapping a new token in `globals.css`.
+
+---
+
+## 14. Revision log
 
 | Date | Change |
 |------|--------|
 | 2026-05-17 | Initial alignment memo. |
 | 2026-05-17 | Linked AI Insights guided chat PRD. |
 | 2026-05-17 | **Rewritten as PRD hub:** metadata, bilingual summary, track/feature matrices, P1–P3 roadmap, sub-spec registry. |
+| 2026-05-17 | **§13 Presentation & UI** + feature row for Trust & Authority theme (v1.2). |

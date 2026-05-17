@@ -7,9 +7,11 @@ import {
 } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -21,8 +23,35 @@ const NAV = [
 export function SiteHeader() {
   const pathname = usePathname();
   const { isLoaded, userId } = useAuth();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const hideScanCta = pathname === "/scan";
+
+  const clerkAppearance = useMemo(
+    () =>
+      resolvedTheme === "light"
+        ? {
+            variables: {
+              colorBackground: "#ffffff",
+              colorText: "#0f172a",
+              colorTextSecondary: "#64748b",
+            },
+            elements: {
+              userButtonPopoverCard: "border border-border bg-card shadow-md",
+            },
+          }
+        : {
+            variables: {
+              colorBackground: "#1e293b",
+              colorText: "#f8fafc",
+              colorTextSecondary: "#cbd5e1",
+            },
+            elements: {
+              userButtonPopoverCard: "border border-border bg-card shadow-md",
+            },
+          },
+    [resolvedTheme],
+  );
 
   useEffect(() => {
     const id = window.setTimeout(() => setMounted(true), 0);
@@ -73,6 +102,7 @@ export function SiteHeader() {
               </Link>
             ) : null}
           </nav>
+          <ThemeToggle />
           <div className="flex items-center gap-2 border-l border-border pl-2 sm:pl-3">
             {!showAuthControls ? (
               <span
@@ -80,18 +110,7 @@ export function SiteHeader() {
                 aria-hidden
               />
             ) : userId ? (
-              <UserButton
-                appearance={{
-                  variables: {
-                    colorBackground: "#1e293b",
-                    colorText: "#f8fafc",
-                    colorTextSecondary: "#cbd5e1",
-                  },
-                  elements: {
-                    userButtonPopoverCard: "border border-border bg-card shadow-md",
-                  },
-                }}
-              />
+              <UserButton appearance={clerkAppearance} />
             ) : (
               <SignInButton mode="modal">
                 <Button

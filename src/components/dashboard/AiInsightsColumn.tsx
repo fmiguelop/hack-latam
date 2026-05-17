@@ -46,7 +46,7 @@ function priorityTone(p: AiInsightsTopAction["priority"]): string {
     case "critical":
       return "border-red-500/40 bg-red-950/45 text-red-50";
     case "medium":
-      return "border-amber-500/35 bg-amber-950/40 text-amber-50";
+      return "border-sky-500/35 bg-sky-950/40 text-sky-50";
     case "low":
       return "border-emerald-500/35 bg-emerald-950/35 text-emerald-50";
     default: {
@@ -110,7 +110,7 @@ export function AiInsightsColumn({
               }}
               title="Fuerza una nueva llamada al modelo ignorando la caché temporal (consumo/coste de tokens)."
               size="lg"
-              className="min-h-11 rounded-lg border-amber-500/50 bg-amber-950/50 px-4 py-2 text-amber-100 hover:bg-amber-900/50 disabled:opacity-45"
+              className="min-h-11 rounded-lg border-sky-500/50 bg-sky-950/50 px-4 py-2 text-sky-100 hover:bg-sky-900/55 disabled:opacity-45"
             >
               Nueva generación (coste modelo)
             </Button>
@@ -121,7 +121,7 @@ export function AiInsightsColumn({
       {servedFromCache && result && !loading ? (
         <p className="mt-3 rounded-lg border border-accent/25 bg-accent/5 p-3 text-xs leading-relaxed text-foreground">
           Resultado desde caché temporal (menos de 24h). Usa{" "}
-          <strong className="text-amber-200">
+          <strong className="text-sky-200">
             nueva generación (coste modelo)
           </strong>
           {" "}

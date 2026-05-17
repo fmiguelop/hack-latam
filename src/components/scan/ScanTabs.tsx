@@ -57,7 +57,7 @@ export function ScanTabs({
             aria-selected={isActive}
             disabled={tabDisabled}
             onClick={() => onChange(tab.id)}
-            className={`min-h-11 min-w-[44px] cursor-pointer rounded-xl border px-4 py-2.5 text-sm font-medium transition ${
+            className={`min-h-11 min-w-[44px] cursor-pointer rounded-lg border px-4 py-2.5 text-sm font-medium transition ${
               isActive
                 ? "border-primary bg-primary/10 text-primary shadow-sm"
                 : "border-border bg-muted/50 text-muted-foreground hover:border-input hover:bg-muted hover:text-foreground"

@@ -1,28 +1,52 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Trust & Authority — defensive SMB dashboard (dark-first, WCAG-friendly contrast) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Trust & Authority — navy + precise sky; defensive B2B; dark default, light via html.light */
 :root {
-  --radius: 0.75rem;
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
+  --radius: 0.5rem;
+  --background: #020617;
+  --foreground: #f1f5f9;
+  --card: #0f172a;
   --card-foreground: #f1f5f9;
-  --popover: #1e293b;
+  --popover: #0f172a;
   --popover-foreground: #f1f5f9;
-  --primary: #f59e0b;
-  --primary-foreground: #0f172a;
-  --secondary: #334155;
+  --primary: #0284c7;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
   --secondary-foreground: #f8fafc;
-  --muted: #272f42;
-  --muted-foreground: #cbd5e1;
-  --accent: #8b5cf6;
-  --accent-foreground: #faf5ff;
+  --muted: #162032;
+  --muted-foreground: #94a3b8;
+  --accent: #0369a1;
+  --accent-foreground: #f0f9ff;
   --destructive: #ef4444;
   --destructive-foreground: #fef2f2;
   --border: #334155;
   --input: #334155;
-  --ring: #f59e0b;
+  --ring: #0ea5e9;
+}
+
+html.light {
+  --background: #f8fafc;
+  --foreground: #020617;
+  --card: #ffffff;
+  --card-foreground: #020617;
+  --popover: #ffffff;
+  --popover-foreground: #020617;
+  --primary: #0369a1;
+  --primary-foreground: #ffffff;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0284c7;
+  --accent-foreground: #f0f9ff;
+  --destructive: #dc2626;
+  --destructive-foreground: #fef2f2;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0284c7;
 }
 
 @theme inline {
@@ -49,14 +73,14 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: var(--font-ibm-plex-sans);
+  --font-sans: var(--font-plus-jakarta-sans);
   --font-mono: var(--font-ibm-plex-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-ibm-plex-sans), system-ui, sans-serif;
+  font-family: var(--font-plus-jakarta-sans), system-ui, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {

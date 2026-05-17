@@ -14,7 +14,7 @@ function statusStyles(status: ChecklistStatus): string {
     case "pass":
       return "border-emerald-500/40 bg-emerald-950/35 text-emerald-100";
     case "warn":
-      return "border-amber-500/35 bg-amber-950/40 text-amber-100";
+      return "border-sky-500/35 bg-sky-950/40 text-sky-100";
     case "fail":
       return "border-red-500/40 bg-red-950/45 text-red-100";
     default: {
@@ -44,7 +44,7 @@ function badgeClasses(status: ChecklistStatus): string {
     case "pass":
       return "bg-emerald-600 text-white";
     case "warn":
-      return "bg-amber-600 text-white";
+      return "bg-sky-600 text-white";
     case "fail":
       return "bg-red-600 text-white";
     default: {
