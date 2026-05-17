@@ -1,0 +1,124 @@
+import type { ScanFinding } from "@/types/scan";
+
+type CrtShEntry = {
+  name_value?: string;
+  common_name?: string;
+};
+
+const CRT_SH_BASE = "https://crt.sh/";
+const FETCH_TIMEOUT_MS = 25_000;
+
+function severityForSubdomainCount(count: number): "medium" | "low" {
+  if (count > 50) {
+    return "medium";
+  }
+  return "low";
+}
+
+function explanationForCount(count: number): string {
+  if (count === 0) {
+    return "No extra hostnames showed up in public certificate logs for this domain — fewer exposed names can mean a smaller footprint (not a guarantee every asset is gone).";
+  }
+  if (count > 50) {
+    return "There are many hostnames tied to this brand in certificate transparency logs — each name can be another place attackers probe for weak configs.";
+  }
+  return "Certificate transparency logs list several hostnames for this domain — more names usually means more places to keep patched and monitored.";
+}
+
+/**
+ * Fetch subdomains/hostnames seen in crt.sh for a registrable-style domain (e.g. example.com).
+ */
+export async function enumerateSubdomainsFromCrtSh(
+  domain: string,
+): Promise<ScanFinding[]> {
+  const trimmed = domain.trim().toLowerCase();
+  if (!trimmed) {
+    return [];
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  const url = `${CRT_SH_BASE}?q=${encodeURIComponent(
+    `%.${trimmed}`,
+  )}&output=json`;
+
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "hack-latam-recon/0.1 (+https://github.com/)",
+      },
+      next: { revalidate: 0 },
+    });
+  } catch (cause) {
+    clearTimeout(timeout);
+    const message = cause instanceof Error ? cause.message : "Unknown error";
+    throw new Error(`crt.sh request failed: ${message}`);
+  }
+  clearTimeout(timeout);
+
+  if (!response.ok) {
+    throw new Error(`crt.sh returned HTTP ${response.status}`);
+  }
+
+  const rawText = await response.text();
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(rawText);
+  } catch {
+    throw new Error("crt.sh returned non-JSON payload");
+  }
+
+  if (!Array.isArray(parsed)) {
+    throw new Error("crt.sh JSON was not an array");
+  }
+
+  const hosts = new Set<string>();
+  for (const row of parsed as CrtShEntry[]) {
+    const candidates = [row.name_value, row.common_name];
+    for (const value of candidates) {
+      if (typeof value !== "string" || !value.trim()) {
+        continue;
+      }
+      for (const part of value.split(/\n/)) {
+        const host = part
+          .trim()
+          .toLowerCase()
+          .replace(/^\*\./, "");
+        if (!host || !host.endsWith(trimmed)) {
+          continue;
+        }
+        // Skip obvious junk tokens
+        if (host.includes(" ") || host.includes("*")) {
+          continue;
+        }
+        hosts.add(host);
+      }
+    }
+  }
+
+  const sorted = [...hosts].sort((a, b) => a.localeCompare(b));
+  const severity = severityForSubdomainCount(sorted.length);
+  const explanation = explanationForCount(sorted.length);
+
+  const finding: ScanFinding = {
+    id: `subdomain-enum-crt-${trimmed}`,
+    module: "subdomain_enum",
+    severity,
+    title:
+      sorted.length === 0
+        ? "No subdomains found in certificate transparency (crt.sh)"
+        : `${sorted.length} hostname(s) found via certificate transparency`,
+    explanation,
+    metadata: {
+      source: "crt.sh",
+      hostnames: sorted.slice(0, 200),
+      totalHostnames: sorted.length,
+      truncatedListMax: 200,
+    },
+  };
+
+  return [finding];
+}
