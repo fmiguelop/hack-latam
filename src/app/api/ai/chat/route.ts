@@ -4,8 +4,9 @@ import {
   parseChatModelOutput,
 } from "@/lib/ai/chat-prompt";
 import { callOpenRouterCompletion } from "@/lib/ai/openrouter";
+import { parseScanSnapshot } from "@/lib/ai/parse-scan-snapshot";
 import type { AiChatRequestBody, AiChatResponseBody } from "@/types/ai-chat";
-import type { AiInsightsRequestBody, AiInsightsResponseBody } from "@/types/ai-insights";
+import type { AiInsightsResponseBody } from "@/types/ai-insights";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -21,61 +22,6 @@ function isInsightsResponse(x: unknown): x is AiInsightsResponseBody {
     typeof o.perFindingInsightsById === "object" &&
     o.perFindingInsightsById !== null
   );
-}
-
-function parseScanSnapshot(raw: unknown): AiInsightsRequestBody | null {
-  if (!raw || typeof raw !== "object") return null;
-  const p = raw as Record<string, unknown>;
-
-  const normalizedTarget =
-    typeof p.normalizedTarget === "string" ? p.normalizedTarget.trim() : "";
-  const inputKind = typeof p.inputKind === "string" ? p.inputKind.trim() : "";
-  const totalHostnames =
-    typeof p.totalHostnames === "number" && Number.isFinite(p.totalHostnames)
-      ? Math.max(0, Math.floor(p.totalHostnames))
-      : 0;
-  const hostnameSampleShownCount =
-    typeof p.hostnameSampleShownCount === "number" &&
-    Number.isFinite(p.hostnameSampleShownCount)
-      ? Math.max(0, Math.floor(p.hostnameSampleShownCount))
-      : 0;
-  const rawScanMode =
-    typeof p.scanMode === "string" ? p.scanMode.trim().toLowerCase() : "";
-  const scanMode: "deep" | "quick" =
-    rawScanMode === "quick" ? "quick" : "deep";
-
-  const findings = p.findings;
-  if (!Array.isArray(findings)) return null;
-
-  const modulesRaw = p.modules;
-  if (!Array.isArray(modulesRaw)) return null;
-
-  if (!normalizedTarget || !inputKind) return null;
-
-  const checklistRows = p.checklistRows;
-  const crOut: NonNullable<AiInsightsRequestBody["checklistRows"]> = [];
-  if (Array.isArray(checklistRows)) {
-    for (const row of checklistRows) {
-      if (!row || typeof row !== "object") continue;
-      const r = row as Record<string, unknown>;
-      if (typeof r.id !== "string" || typeof r.label !== "string") continue;
-      if (typeof r.status !== "string") continue;
-      const detail =
-        typeof r.detail === "string" ? r.detail : undefined;
-      crOut.push({ id: r.id, label: r.label, status: r.status, detail });
-    }
-  }
-
-  return {
-    normalizedTarget,
-    inputKind,
-    scanMode,
-    totalHostnames,
-    hostnameSampleShownCount,
-    findings: findings as AiInsightsRequestBody["findings"],
-    modules: modulesRaw as AiInsightsRequestBody["modules"],
-    checklistRows: crOut.length > 0 ? crOut : undefined,
-  };
 }
 
 function parseChatBody(payload: unknown): AiChatRequestBody | null {
@@ -99,8 +45,10 @@ function parseChatBody(payload: unknown): AiChatRequestBody | null {
     messages.push({ role: o.role, content: o.content });
   }
 
-  const lastUser = [...messages].reverse().find((m) => m.role === "user");
-  if (!lastUser || !lastUser.content.trim()) return null;
+  // The model prompt assumes the last message is the user's current question.
+  if (messages[messages.length - 1]?.role !== "user") return null;
+  const lastUser = messages[messages.length - 1];
+  if (!lastUser.content.trim()) return null;
 
   return {
     scanSnapshot,
