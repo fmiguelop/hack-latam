@@ -7,10 +7,9 @@ import { AssetsColumn } from "@/components/dashboard/AssetsColumn";
 import { ChecklistColumn } from "@/components/dashboard/ChecklistColumn";
 import { RiskColumn } from "@/components/dashboard/RiskColumn";
 import { SkeletonGrid } from "@/components/dashboard/SkeletonGrid";
-import {
-  aggregateHostnamesFromFindings,
-  buildChecklistRows,
-} from "@/lib/dashboard/findings";
+import { clearChatMessages, chatSessionStorageKey } from "@/lib/ai/chat-session-storage";
+import { aggregateHostnamesFromFindings } from "@/lib/dashboard/findings";
+import { buildInsightsRequestBody } from "@/lib/dashboard/insights-payload";
 import { cn } from "@/lib/utils";
 import type { AiInsightsResponseBody } from "@/types/ai-insights";
 import type { ScanResponseBody } from "@/types/scan";
@@ -71,6 +70,14 @@ export function ScanWorkspace() {
     setError(null);
     setResult(null);
     resetAi();
+    if (result?.normalizedTarget) {
+      clearChatMessages(
+        chatSessionStorageKey(
+          result.normalizedTarget,
+          result.mode ?? "deep",
+        ),
+      );
+    }
     setLoading(true);
     setHasScanned(true);
     try {
@@ -100,51 +107,25 @@ export function ScanWorkspace() {
     }
   }
 
+  const scanSnapshot = useMemo(() => {
+    if (!result) return null;
+    return buildInsightsRequestBody({
+      result,
+      findings: findingsForGrid,
+      totalHostnames: hostAggregate.total,
+      hostnameSampleShownCount: hostAggregate.hostnames.length,
+    });
+  }, [findingsForGrid, hostAggregate.hostnames.length, hostAggregate.total, result]);
+
   const generateInsights = useCallback(async () => {
-    if (!result || loading) return;
+    if (!result || loading || !scanSnapshot) return;
     setAiLoading(true);
     setAiError(null);
     try {
-      const checklistRowsBuilt = buildChecklistRows(findingsForGrid).map(
-        (r) => ({
-          id: r.id,
-          label: r.label,
-          status: r.status,
-          ...(r.detail ? { detail: r.detail } : {}),
-        }),
-      );
-
-      const body = {
-        normalizedTarget: result.normalizedTarget,
-        inputKind: result.inputKind,
-        scanMode: result.mode,
-        totalHostnames: hostAggregate.total,
-        hostnameSampleShownCount: hostAggregate.hostnames.length,
-        findings: findingsForGrid.map((f) => ({
-          id: f.id,
-          module: f.module,
-          severity: f.severity,
-          title: f.title,
-          explanation: f.explanation,
-        })),
-        checklistRows:
-          result.mode === "quick"
-            ? undefined
-            : checklistRowsBuilt.length > 0
-              ? checklistRowsBuilt
-              : undefined,
-        modules: (result.modules ?? []).map((m) => ({
-          name: m.name,
-          status: m.status,
-          ...(typeof m.durationMs === "number" ? { durationMs: m.durationMs } : {}),
-          ...(m.errorMessage ? { errorMessage: m.errorMessage } : {}),
-        })),
-      };
-
       const response = await fetch("/api/ai/insights", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify(scanSnapshot),
       });
       const payload: unknown = await response.json();
       if (!response.ok) {
@@ -169,13 +150,16 @@ export function ScanWorkspace() {
     } finally {
       setAiLoading(false);
     }
-  }, [
-    findingsForGrid,
-    hostAggregate.hostnames.length,
-    hostAggregate.total,
-    loading,
-    result,
-  ]);
+  }, [loading, result, scanSnapshot]);
+
+  const handleFindingCitationClick = useCallback((findingId: string) => {
+    setActiveTab("findings");
+    requestAnimationFrame(() => {
+      document
+        .getElementById(`finding-${findingId}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }, []);
 
   const displayTarget =
     result?.normalizedTarget?.trim() ||
@@ -284,6 +268,10 @@ export function ScanWorkspace() {
             result={aiResult}
             disabled={loading}
             onGenerate={generateInsights}
+            scanSnapshot={scanSnapshot}
+            isSignedIn={Boolean(isSignedIn)}
+            authLoaded={authLoaded}
+            onFindingCitationClick={handleFindingCitationClick}
           />
         ) : null}
 
