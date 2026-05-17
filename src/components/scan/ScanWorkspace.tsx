@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
+import { useMutation, useQuery } from "convex/react";
 import { History } from "lucide-react";
 import { AiInsightsColumn } from "@/components/dashboard/AiInsightsColumn";
 import { AllFindingsPanel } from "@/components/dashboard/AllFindingsPanel";
@@ -29,6 +30,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { AiInsightsResponseBody } from "@/types/ai-insights";
 import type { ScanResponseBody } from "@/types/scan";
+import { api } from "../../../convex/_generated/api";
 import {
   useCallback,
   useEffect,
@@ -61,6 +63,12 @@ type ScanWorkspaceProps = {
 
 export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
   const { isLoaded: authLoaded, isSignedIn } = useAuth();
+  const createScanMutation = useMutation(api.scans.createScan);
+  const convexScans = useQuery(
+    api.scans.getUserScans,
+    authLoaded && isSignedIn ? {} : "skip",
+  );
+
   const [target, setTarget] = useState(initialTarget);
   const [scanMode, setScanMode] = useState<ScanMode>("deep");
   const [activeTab, setActiveTab] = useState<ScanTabId>("overview");
@@ -71,16 +79,51 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [history, setHistory] = useState<ScanSessionHistoryEntry[]>([]);
+  const [sessionHistory, setSessionHistory] = useState<ScanSessionHistoryEntry[]>(
+    [],
+  );
+  const [convexScanId, setConvexScanId] = useState<string | null>(null);
   const [selectedHistoryId, setSelectedHistoryId] = useState<string | null>(
     null,
   );
 
   useEffect(() => {
     queueMicrotask(() => {
-      setHistory(loadScanSessionHistory());
+      setSessionHistory(loadScanSessionHistory());
     });
   }, []);
+
+  const convexHistoryEntries = useMemo((): ScanSessionHistoryEntry[] => {
+    if (!convexScans?.length) return [];
+    return convexScans.map((doc) => ({
+      id: doc._id,
+      savedAt: doc.createdAt,
+      inputTarget: doc.target,
+      mode: doc.scanMode,
+      result: {
+        target: doc.target,
+        normalizedTarget: doc.normalizedTarget,
+        inputKind: doc.inputKind,
+        mode: doc.scanMode,
+        findings: doc.findings as ScanResponseBody["findings"],
+        modules: doc.modules as ScanResponseBody["modules"],
+      },
+      aiInsights: doc.aiInsights as AiInsightsResponseBody | undefined,
+    }));
+  }, [convexScans]);
+
+  const history = useMemo(() => {
+    if (authLoaded && isSignedIn && convexScans !== undefined) {
+      return convexHistoryEntries;
+    }
+    return sessionHistory;
+  }, [
+    authLoaded,
+    isSignedIn,
+    convexScans,
+    convexHistoryEntries,
+    sessionHistory,
+  ]);
 
   const findingsForGrid = useMemo(
     () => result?.findings ?? [],
@@ -115,6 +158,7 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
     setError(null);
     setActiveTab("overview");
     setSelectedHistoryId(null);
+    setConvexScanId(null);
     setMobileSidebarOpen(false);
   }, [resetAi]);
 
@@ -123,13 +167,16 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
       setResult(entry.result);
       setTarget(entry.inputTarget);
       setScanMode(entry.mode);
-      resetAi();
+      setAiResult(entry.aiInsights ?? null);
+      setAiError(null);
+      setAiLoading(false);
+      setConvexScanId(entry.id);
       setError(null);
       setActiveTab("overview");
       setSelectedHistoryId(entry.id);
       setMobileSidebarOpen(false);
     },
-    [resetAi],
+    [],
   );
 
   const historySidebar = useMemo(
@@ -150,6 +197,7 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
     setError(null);
     setResult(null);
     resetAi();
+    setConvexScanId(null);
     setLoading(true);
     setSelectedHistoryId(null);
     try {
@@ -175,18 +223,41 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
       setActiveTab("overview");
       setMobileSidebarOpen(false);
 
-      setHistory((prev) => {
-        const { entries, newId } = appendScanSessionHistoryEntry(prev, {
-          inputTarget: target,
-          mode: scanMode,
-          result: scanResult,
+      let nextConvexId: string | null = null;
+      if (authLoaded && isSignedIn) {
+        try {
+          nextConvexId = await createScanMutation({
+            target,
+            normalizedTarget: scanResult.normalizedTarget,
+            inputKind: scanResult.inputKind,
+            scanMode: scanResult.mode,
+            findings: scanResult.findings,
+            modules: scanResult.modules,
+          });
+        } catch {
+          /* persistencia opcional */
+        }
+      }
+      setConvexScanId(nextConvexId);
+
+      if (!isSignedIn) {
+        setSessionHistory((prev) => {
+          const { entries, newId } = appendScanSessionHistoryEntry(prev, {
+            inputTarget: target,
+            mode: scanMode,
+            result: scanResult,
+          });
+          persistScanSessionHistory(entries);
+          queueMicrotask(() => {
+            setSelectedHistoryId(newId);
+          });
+          return entries;
         });
-        persistScanSessionHistory(entries);
+      } else if (nextConvexId) {
         queueMicrotask(() => {
-          setSelectedHistoryId(newId);
+          setSelectedHistoryId(nextConvexId);
         });
-        return entries;
-      });
+      }
     } catch {
       setError("Error de red — inténtalo de nuevo.");
     } finally {
@@ -197,6 +268,12 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
   const generateInsights = useCallback(
     async (opts?: { forceRefresh?: boolean; navigateToAi?: boolean }) => {
       if (!result || loading) return;
+      if (!isSignedIn) {
+        setAiError(
+          "Debes iniciar sesión para generar orientación con IA.",
+        );
+        return;
+      }
       setAiLoading(true);
       setAiError(null);
       try {
@@ -236,6 +313,8 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
               : {}),
             ...(m.errorMessage ? { errorMessage: m.errorMessage } : {}),
           })),
+          ...(convexScanId ? { convexScanId } : {}),
+          forceRefresh: Boolean(opts?.forceRefresh),
         };
 
         const response = await fetch("/api/ai/insights", {
@@ -270,9 +349,11 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
       }
     },
     [
+      convexScanId,
       findingsForGrid,
       hostAggregate.hostnames.length,
       hostAggregate.total,
+      isSignedIn,
       loading,
       result,
     ],
@@ -304,7 +385,7 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
           totalHostnames={hostAggregate.total}
           aiResult={aiResult}
           aiLoading={aiLoading}
-          aiDisabled={loading}
+          aiDisabled={loading || !authLoaded || !isSignedIn}
           onGenerateInsights={() =>
             void generateInsights({ navigateToAi: false })
           }
@@ -358,7 +439,8 @@ export function ScanWorkspace({ initialTarget = "" }: ScanWorkspaceProps) {
           loading={aiLoading}
           error={aiError}
           result={aiResult}
-          disabled={loading}
+          disabled={loading || !authLoaded || !isSignedIn}
+          servedFromCache={Boolean(aiResult?.servedFromCache)}
           onGenerate={(opts) =>
             void generateInsights({ ...opts, navigateToAi: true })
           }
