@@ -1,7 +1,7 @@
 import { BRAND_COLORS } from "@/lib/site-metadata";
 
 /**
- * Passive Sentinel mark for next/og ImageResponse — shield tile, radar ring, H monogram.
+ * Brand mark for next/og ImageResponse — shield tile, radar ring, O monogram (+ orbit dot when space allows).
  * Uses flex-compatible layouts only (Satori subset).
  */
 export function PassiveSentinelMarkOg({
@@ -12,13 +12,24 @@ export function PassiveSentinelMarkOg({
   const pad = Math.max(2, Math.round(diameter * 0.1));
   const outerSide = diameter - pad * 2;
   const ring = Math.max(2, Math.round(outerSide * 0.06));
-  const innerBox = outerSide - ring * 2;
+  const innerClear = outerSide - ring * 2;
 
-  const letterScale = 0.52;
-  const letterW = Math.round(innerBox * letterScale);
-  const letterH = Math.round(innerBox * 0.58);
-  const bar = Math.max(2, Math.round(letterW * 0.22));
-  const bridgeTop = Math.round(letterH * 0.36 - bar / 2);
+  const oSize = Math.max(
+    8,
+    Math.round(innerClear * 0.58),
+  );
+  const oBorder = Math.max(2, Math.round(oSize * 0.2));
+
+  const showSatellite = diameter >= 44;
+  const dotSize = showSatellite
+    ? Math.max(3, Math.round(diameter * 0.095))
+    : 0;
+  const orbitR = oSize / 2 + oBorder / 2 + dotSize * 0.28;
+  const angle = (-42 * Math.PI) / 180;
+  const dotLeft =
+    outerSide / 2 + orbitR * Math.cos(angle) - dotSize / 2;
+  const dotTop =
+    outerSide / 2 + orbitR * Math.sin(angle) - dotSize / 2;
 
   return (
     <div
@@ -41,6 +52,7 @@ export function PassiveSentinelMarkOg({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          position: "relative",
           borderRadius: "50%",
           border: `${ring}px solid ${BRAND_COLORS.ring}`,
           boxSizing: "border-box",
@@ -48,49 +60,27 @@ export function PassiveSentinelMarkOg({
       >
         <div
           style={{
-            position: "relative",
-            width: letterW,
-            height: letterH,
-            display: "flex",
+            width: oSize,
+            height: oSize,
+            borderRadius: "50%",
+            border: `${oBorder}px solid ${BRAND_COLORS.foreground}`,
+            boxSizing: "border-box",
+            flexShrink: 0,
           }}
-        >
-          {/* H — left stem */}
+        />
+        {showSatellite ? (
           <div
             style={{
               position: "absolute",
-              left: 0,
-              top: 0,
-              width: bar,
-              height: letterH,
-              borderRadius: bar / 2,
-              background: BRAND_COLORS.foreground,
+              left: dotLeft,
+              top: dotTop,
+              width: dotSize,
+              height: dotSize,
+              borderRadius: "50%",
+              background: BRAND_COLORS.primary,
             }}
           />
-          {/* H — right stem */}
-          <div
-            style={{
-              position: "absolute",
-              right: 0,
-              top: 0,
-              width: bar,
-              height: letterH,
-              borderRadius: bar / 2,
-              background: BRAND_COLORS.foreground,
-            }}
-          />
-          {/* H — bridge */}
-          <div
-            style={{
-              position: "absolute",
-              left: bar,
-              top: bridgeTop,
-              width: letterW - bar * 2,
-              height: bar,
-              borderRadius: bar / 2,
-              background: BRAND_COLORS.foreground,
-            }}
-          />
-        </div>
+        ) : null}
       </div>
     </div>
   );

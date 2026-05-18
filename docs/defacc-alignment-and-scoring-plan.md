@@ -8,7 +8,7 @@
 | **Version** | 1.2 |
 | **Last updated** | 2026-05-17 |
 
-**This document is the primary source of truth** for how Hack LATAM fits the hackathon **def/acc** (defensive acceleration) track, what ships today vs roadmap, and how we prioritize work for judges and operators. Satellite docs are linked from [Sub-spec registry](#12-sub-spec-registry).
+**This document is the primary source of truth** for how **Órbita** fits the hackathon **def/acc** (defensive acceleration) track (under the original working name **Hack LATAM**), what ships today vs roadmap, and how we prioritize work for judges and operators. Satellite docs are linked from [Sub-spec registry](#12-sub-spec-registry).
 
 **Also read:** [CONTEXT.md](../CONTEXT.md), [README.md](../README.md).
 
@@ -16,11 +16,11 @@
 
 ## 1. Executive summary (EN)
 
-**Hack LATAM** is a **passive external-attack-surface dashboard for SMBs/PYMEs** without dedicated security staff. Users submit a domain or URL; the backend runs **non-exploitative** checks (certificate transparency footprint, DNS email-auth posture, HTTPS certificate and TLS-version signals). Results and optional **AI-generated** remediation summaries are framed for operators, emphasize **authorized use only**, and avoid claiming full coverage or perfect security. Core value is **deterministic scans**; AI is an assist layer. This is **defensive resilience tooling**, not offensive recon-as-a-product.
+**Órbita** is a **passive external-attack-surface dashboard for SMBs/PYMEs** without dedicated security staff. Users submit a domain or URL; the backend runs **non-exploitative** checks (certificate transparency footprint, DNS email-auth posture, HTTPS certificate and TLS-version signals). Results and optional **AI-generated** remediation summaries are framed for operators, emphasize **authorized use only**, and avoid claiming full coverage or perfect security. Core value is **deterministic scans**; AI is an assist layer. This is **defensive resilience tooling**, not offensive recon-as-a-product.
 
 ### Executive summary (ES)
 
-**Hack LATAM** es un **tablero pasivo de superficie de ataque externa para PYMEs** sin equipo de seguridad dedicado. Los usuarios envían un dominio o URL; el backend ejecuta comprobaciones **no explotativas** (huella en transparencia de certificados, postura de autenticación de correo DNS, certificado HTTPS y señales de versión TLS). Los resultados y los resúmenes opcionales **generados por IA** están orientados a operadores, enfatizan **uso solo autorizado** y evitan afirmar cobertura total o “seguridad perfecta”. El núcleo del producto son los **escaneos determinísticos**; la IA es una capa de apoyo. Es **herramienta de resiliencia defensiva**, no recon ofensivo como producto.
+**Órbita** es un **tablero pasivo de superficie de ataque externa para PYMEs** sin equipo de seguridad dedicado. Los usuarios envían un dominio o URL; el backend ejecuta comprobaciones **no explotativas** (huella en transparencia de certificados, postura de autenticación de correo DNS, certificado HTTPS y señales de versión TLS). Los resultados y los resúmenes opcionales **generados por IA** están orientados a operadores, enfatizan **uso solo autorizado** y evitan afirmar cobertura total o “seguridad perfecta”. El núcleo del producto son los **escaneos determinísticos**; la IA es una capa de apoyo. Es **herramienta de resiliencia defensiva**, no recon ofensivo como producto.
 
 ---
 
@@ -214,7 +214,7 @@ When picking up def/acc or scoring work:
 
 ## 13. Presentation & UI (trust signals)
 
-Hackathon reviewers infer product seriousness partly from visuals. Hack LATAM intentionally uses a **Trust & Authority** direction (professional B2B / defensive tooling), not playful “generic AI startup” palettes.
+Hackathon reviewers infer product seriousness partly from visuals. **Órbita** intentionally uses a **Trust & Authority** direction (professional B2B / defensive tooling), not playful “generic AI startup” palettes.
 
 | Area | Decision | Where it lives |
 |------|-----------|----------------|

@@ -1,6 +1,6 @@
-# Hack LATAM — Passive SMB attack-surface dashboard
+# Órbita — Passive SMB attack-surface dashboard
 
-Small web app for **PYMEs / SMBs without a security team**: enter a domain you are allowed to assess and receive a **passive, plain-language** snapshot of public signals (not a pen test or “real-time threat” feed). Built for a **def/acc** hackathon track — **defensive resilience**, not offensive tooling.
+Small web app for **PYMEs / SMBs without a security team**: enter a domain you are allowed to assess and receive a **passive, plain-language** snapshot of public signals (not a pen test or “real-time threat” feed). Originally shaped for a **def/acc** hackathon (**Hack LATAM**) — **defensive resilience**, not offensive tooling.
 
 ## Quick start
 

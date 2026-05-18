@@ -1,11 +1,13 @@
 import Link from "next/link";
 
+import { SITE_NAME } from "@/lib/site-metadata";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-muted/40">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
-          <p className="text-sm font-semibold text-foreground">Hack LATAM</p>
+          <p className="text-sm font-semibold text-foreground">{SITE_NAME}</p>
           <p className="mt-1 max-w-sm text-xs text-foreground/65">
             Instantáneo pasivo tras enviar dominio autorizado — correo público en DNS,
             HTTPS observable y huella CT según modo. Sin explotación, sin vigilancia ante
@@ -28,7 +30,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <p className="border-t border-border py-4 text-center text-xs text-foreground/60">
-        © {new Date().getFullYear()} Hack LATAM · proyecto def/acc · resiliencia observable
+        © {new Date().getFullYear()} {SITE_NAME} · resiliencia observable
       </p>
     </footer>
   );

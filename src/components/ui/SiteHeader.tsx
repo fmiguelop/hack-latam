@@ -13,6 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { PassiveSentinelLogo } from "@/components/ui/PassiveSentinelLogo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { SITE_NAME } from "@/lib/site-metadata";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -70,7 +71,7 @@ export function SiteHeader() {
           </span>
           <span className="flex flex-col leading-tight">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Hack LATAM
+              {SITE_NAME}
             </span>
             <span className="text-sm font-medium text-foreground">
               Huella observable · solo pasivo

@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 
 import { PassiveSentinelMarkOg } from "@/lib/brand-mark-og";
+import { SITE_NAME, SITE_TAGLINE } from "@/lib/site-metadata";
 
-export const alt =
-  "Hack LATAM — Vigila lo observable: instantáneo pasivo de huella observable para PYMEs.";
+export const alt = `${SITE_NAME} — ${SITE_TAGLINE}: instantáneo pasivo de huella observable para PYMEs.`;
 
 export const size = {
   width: 1200,
@@ -65,7 +65,7 @@ export default async function Image() {
                 lineHeight: 1.05,
               }}
             >
-              Hack LATAM
+              {SITE_NAME}
             </div>
             <div
               style={{
@@ -75,7 +75,7 @@ export default async function Image() {
                 letterSpacing: "-0.02em",
               }}
             >
-              Vigila lo observable
+              {SITE_TAGLINE}
             </div>
             <div
               style={{

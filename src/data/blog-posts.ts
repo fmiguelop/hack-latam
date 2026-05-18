@@ -39,7 +39,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Pantalla con correos electrónicos y alertas de seguridad",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     featured: true,
     problem:
       "Muchas PYMEs publican su sitio web pero nunca configuran SPF ni DMARC en DNS. Los atacantes envían correos que parecen legítimos porque el dominio del remitente coincide con el de la víctima.",
@@ -64,7 +64,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Candado digital sobre interfaz de servidor",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Los certificados Let's Encrypt duran 90 días; en entornos sin renovación automática es común olvidar un subdominio o un entorno de staging expuesto.",
     impact:
@@ -87,7 +87,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Código fuente en pantalla con tonos azules",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Muchos sitios corporativos sirven HTML sin políticas de contenido ni protección contra incrustación en iframes. Un script inyectado o un formulario embebido en un sitio malicioso explota esa ausencia.",
     impact:
@@ -111,7 +111,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Rack de servidores en centro de datos",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "La transparencia de certificados revela nombres que el equipo de TI ya no gestiona. Un `staging.`, `dev.` o `old-api.` sin WAF ni parches es un blanco fácil.",
     impact:
@@ -134,7 +134,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Pantalla con matriz de código y temática de ciberseguridad",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Las PYMEs habilitan MFA solo para administradores o lo dejan como opción. Los atacantes priorizan cuentas de finanzas, RRHH y buzones compartidos sin segundo factor.",
     impact:
@@ -157,7 +157,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Teclado con luz tenue en entorno de oficina",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Las brechas masivas publican hashes y contraseñas. Los atacantes prueban esas combinaciones en Microsoft 365, VPN y paneles de administración.",
     impact:
@@ -180,7 +180,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Visualización de red global con nodos conectados",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Registradores y DNS gestionados a menudo dejan DNSSEC como opt-in. Las PYMEs asumen que «tener DNS» implica integridad, pero las respuestas pueden alterarse en tránsito.",
     impact:
@@ -203,7 +203,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Desarrollador revisando código en monitor",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Equipos de producto publican APIs internas para integraciones y nunca añaden OAuth, API keys ni rate limiting. Los crawlers las indexan en horas.",
     impact:
@@ -226,7 +226,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Rascacielos y skyline urbano representando infraestructura en la nube",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Equipos suben dumps de base de datos o logs a almacenamiento objeto para compartir con consultores y olvidan cerrar permisos. Los motores de búsqueda indexan listados abiertos.",
     impact:
@@ -249,7 +249,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Pantalla con alerta de seguridad en rojo",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Atacantes escanean puertos RDP y VPN, envían phishing con adjuntos y explotan CVEs publicados. Las PYMEs sin SOC detectan el cifrado cuando ya es tarde.",
     impact:
@@ -272,7 +272,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Balanza de la justicia sobre fondo neutro, simbolizando cumplimiento legal",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Muchas empresas LATAM venden SaaS o servicios a clientes UE sin registro de actividades de tratamiento, bases legales documentadas ni procedimiento de breach notification.",
     impact:
@@ -295,7 +295,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Dashboard con gráficos de monitoreo y métricas de sistemas",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Los equipos configuran backup automático pero no prueban restauración completa. En ransomware descubren que las copias también estaban cifradas o eran incrementales corruptos.",
     impact:
@@ -318,7 +318,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Pantalla con codigo y tematica de seguridad informatica",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Equipos habilitan escritorio remoto para soporte y olvidan restringir el firewall. Los bots prueban credenciales por defecto y exploits conocidos en minutos.",
     impact:
@@ -341,7 +341,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Codigo fuente en monitor con tema oscuro",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Aplicaciones legacy dejan /admin, /wp-admin o /manager/html accesibles sin VPN. Los crawlers los catalogan y los atacantes prueban credenciales por defecto.",
     impact:
@@ -364,7 +364,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Desarrollador trabajando en codigo de aplicacion web",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Equipos habilitan CORS amplio para integraciones rapidas y nunca lo endurecen. Un sitio atacante puede leer respuestas autenticadas del navegador de la victima.",
     impact:
@@ -387,7 +387,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Red global iluminada vista desde el espacio",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Dominios corporativos registrados con nombre, correo y telefono reales del fundador o IT. Los atacantes cruzan esa data con LinkedIn para campanas dirigidas.",
     impact:
@@ -410,7 +410,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Candado digital sobre teclado de portatil",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Entornos internos publicados a Internet conservan certificados autofirmados por comodidad. Empleados aprenden a hacer clic en continuar de todos modos.",
     impact:
@@ -433,7 +433,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Persona revisando correos en portatil",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "PYMEs invierten en firewall pero no en educacion continua. Un solo clic en OAuth falso o adjunto malicioso compromete Microsoft 365.",
     impact:
@@ -456,7 +456,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Servidores en rack de centro de datos",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "PYMEs despliegan apps en VPS o PaaS sin WAF ni rate limiting. Los escaneos automaticos explotan vulnerabilidades OWASP Top 10 en horas.",
     impact:
@@ -479,7 +479,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Persona trabajando con laptop en entorno remoto",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Appliances VPN quedan en versiones antiguas porque reiniciar implica ventana de mantenimiento. Los exploits aparecen en foros el mismo dia del advisory.",
     impact:
@@ -502,7 +502,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Codigo en pantalla con reflejos azules",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "Equipos suben hojas de calculo con clientes a apps de terceros sin DPA ni SSO. IT descubre el servicio cuando hay incidente o factura duplicada.",
     impact:
@@ -525,7 +525,7 @@ export const BLOG_POSTS: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format&fit=crop",
     coverImageAlt: "Dashboard de metricas y graficos de monitoreo",
-    author: "Equipo Hack LATAM",
+    author: "Equipo Órbita",
     problem:
       "PYMEs activan logging en cloud pero nadie revisa. Los indicadores de compromiso aparecen dias antes del ransomware en logs que nadie consulta.",
     impact:

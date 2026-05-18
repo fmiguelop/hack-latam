@@ -6,7 +6,9 @@ import { useTheme } from "next-themes";
 import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { PassiveSentinelLogo } from "@/components/ui/PassiveSentinelLogo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { SITE_NAME } from "@/lib/site-metadata";
 
 /**
  * Minimal scan-route header: home + thin branding, theme, auth. No site nav links.
@@ -56,12 +58,12 @@ export function ScanAppChrome() {
           href="/"
           className="group flex min-h-9 shrink-0 items-center gap-2 rounded-lg py-1 pr-2 outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          <span className="flex size-8 items-center justify-center rounded-full border border-border bg-muted text-xs font-bold text-primary">
-            H
+          <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted p-0.5">
+            <PassiveSentinelLogo />
           </span>
           <span className="flex flex-col leading-none">
             <span className="hidden text-[10px] font-semibold uppercase tracking-[0.18em] text-accent sm:block">
-              Hack LATAM
+              {SITE_NAME}
             </span>
             <span className="text-xs font-medium text-muted-foreground sm:text-sm sm:text-foreground">
               Escanear

@@ -77,6 +77,12 @@ Aligned with existing [`quick` / `deep`](../src/lib/recon/run-scan.ts) semantics
 
 ---
 
+### Naming vs verification paths
+
+The product is branded **Órbita**. DNS hostnames and `/.well-known/` file paths below keep the **`hack-latam`** literal prefix as **legacy identifiers** aligned with current implementations — operators must publish exactly those strings until a migration introduces aliases.
+
+---
+
 ## 7. Verification methods (implementation options)
 
 ### 7.1 Option A — DNS TXT record (**recommended primary**)

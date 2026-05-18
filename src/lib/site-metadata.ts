@@ -1,9 +1,12 @@
 /**
  * Canonical site URLs and SEO constants.
- * Set NEXT_PUBLIC_SITE_URL in production (e.g. https://hacklatam.example).
+ * Set NEXT_PUBLIC_SITE_URL in production (e.g. https://orbita.example).
+ *
+ * Domain ownership verification still uses legacy `_hack-latam-*` DNS/file paths
+ * for backward compatibility with tokens users already published.
  */
 
-export const SITE_NAME = "Hack LATAM";
+export const SITE_NAME = "Órbita";
 
 export const SITE_TAGLINE = "Vigila lo observable";
 
@@ -15,7 +18,7 @@ export const TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 
 /** Default meta description — passive posture, no overclaiming */
 export const SITE_DESCRIPTION =
-  "Instantáneo pasivo de huella observable para PYMEs: correo en DNS público (SPF/DMARC/DKIM), HTTPS en :443 y, en modo profundo, señales vía transparencia de certificados. Sin explotación ni cobertura garantizada; la IA opcional solo orienta sobre los hallazgos.";
+  "Órbita ofrece un instantáneo pasivo de huella observable para PYMEs: correo en DNS público (SPF/DMARC/DKIM), HTTPS en :443 y, en modo profundo, señales vía transparencia de certificados. Sin explotación ni cobertura garantizada; la IA opcional solo orienta sobre los hallazgos.";
 
 /** Locked palette — mirrors semantic tokens in src/app/globals.css */
 export const BRAND_COLORS = {

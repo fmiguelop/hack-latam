@@ -50,7 +50,7 @@ export function ScanHistorySidebar({
       <div className="space-y-3 border-t border-border/40 pt-5">
         <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
           <History className="size-3.5" aria-hidden />
-          Historial (esta sesión)
+          Escaneos anteriores
         </p>
         {entries.length === 0 ? (
           <p className="text-sm leading-relaxed text-muted-foreground">

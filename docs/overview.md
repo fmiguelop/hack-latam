@@ -9,7 +9,7 @@
 
 ## Purpose and problem
 
-**Hack LATAM — Attack Surface Dashboard** is a web app that helps **small businesses without a dedicated security team** understand what is already **publicly visible** about their internet-facing assets.
+**Órbita** — passive external attack-surface dashboard — is a web app that helps **small businesses without a dedicated security team** understand what is already **publicly visible** about their internet-facing assets. (Originated as the **Hack LATAM** hackathon project.)
 
 Users enter a **domain**, **URL**, or (in the API) a raw **IPv4** address. The backend runs **passive** reconnaissance steps and returns:
 

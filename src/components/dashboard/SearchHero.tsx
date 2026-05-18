@@ -2,6 +2,7 @@ import type { FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SITE_NAME } from "@/lib/site-metadata";
 
 type SearchHeroProps = {
   target: string;
@@ -25,7 +26,7 @@ export function SearchHero({
       <div className="mx-auto w-full max-w-xl space-y-8 text-center">
         <header className="space-y-3">
           <p className="text-sm font-medium uppercase tracking-widest text-accent">
-            Hack LATAM — Huella externa pasiva
+            {SITE_NAME} — Huella externa pasiva
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Qué se ve ya en público sobre un dominio

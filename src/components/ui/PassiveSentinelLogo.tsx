@@ -4,7 +4,7 @@ type PassiveSentinelLogoProps = {
   className?: string;
 };
 
-/** Inline SVG brand mark — Passive Sentinel (H + perimeter ring). */
+/** Inline SVG brand mark — Órbita (O monogram + perimeter ring + orbit accent). */
 export function PassiveSentinelLogo({ className }: PassiveSentinelLogoProps) {
   return (
     <svg
@@ -23,20 +23,27 @@ export function PassiveSentinelLogo({ className }: PassiveSentinelLogoProps) {
         className="stroke-border fill-muted"
         strokeWidth="1"
       />
+      {/* Observability ring */}
       <circle
         cx="16"
         cy="16"
-        r="11"
+        r="10"
+        fill="none"
         stroke="var(--color-ring)"
         strokeWidth="2"
         opacity={0.95}
       />
-      <path
-        d="M11 11v10M21 11v10M11 16h10"
+      {/* Letter O */}
+      <circle
+        cx="16"
+        cy="16"
+        r="6"
+        fill="none"
         stroke="var(--color-foreground)"
-        strokeWidth="2.25"
-        strokeLinecap="round"
+        strokeWidth="2.2"
       />
+      {/* Satellite accent — órbita */}
+      <circle cx="22.5" cy="11.25" r="2" className="fill-primary" />
     </svg>
   );
 }

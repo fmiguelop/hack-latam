@@ -4,7 +4,7 @@
 |-------|-------|
 | **Status** | Draft — documentation only (no implementation commitment in this doc) |
 | **Priority** | **P3** (per [product hub](defacc-alignment-and-scoring-plan.md)) |
-| **Owner** | Product / engineering (Hack LATAM) |
+| **Owner** | Product / engineering (Órbita) |
 | **Last updated** | 2026-05-17 |
 | **Linked from** | [Def/Acc product hub](defacc-alignment-and-scoring-plan.md) |
 | **Related** | [Threat model](threat-model.md), [Architecture](architecture.md) |

@@ -2,6 +2,7 @@ import type { FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SITE_NAME } from "@/lib/site-metadata";
 
 type TopNavProps = {
   target: string;
@@ -29,7 +30,7 @@ export function TopNav({
           <div className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden />
           <div className="min-w-0">
             <p className="truncate text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Hack LATAM
+              {SITE_NAME}
             </p>
             <p className="truncate text-sm font-medium text-foreground">
               Panel de huella pasiva
