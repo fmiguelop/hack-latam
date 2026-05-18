@@ -1,8 +1,21 @@
 import { ConvexClerkProvider } from "@/components/providers/ConvexClerkProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
+
+import {
+  BRAND_COLORS,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_TAGLINE,
+  TITLE_DEFAULT,
+  TITLE_TEMPLATE,
+  getSiteUrl,
+  manifestUrl,
+  openGraphImageUrl,
+} from "@/lib/site-metadata";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -17,10 +30,57 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
+export const viewport: Viewport = {
+  themeColor: BRAND_COLORS.background,
+};
+
 export const metadata: Metadata = {
-  title: "Hack LATAM — Instantáneo pasivo de huella observable para PYMEs",
-  description:
-    "Cuando eliges modo y ejecutas el escaneo, obtienes un resultado determinístico a partir de señales públicas: correo en DNS (SPF/DMARC/DKIM), HTTPS en :443 y, en modo profundo, huella por transparencia de certificados. Sin explotación ni inventario garantizado; la IA opcional solo orienta sobre los hallazgos.",
+  metadataBase: getSiteUrl(),
+  title: {
+    default: TITLE_DEFAULT,
+    template: TITLE_TEMPLATE,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [...SITE_KEYWORDS],
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "technology",
+  icons: {
+    icon: [{ url: "/icon", sizes: "32x32", type: "image/png" }],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: manifestUrl(),
+  openGraph: {
+    type: "website",
+    locale: "es_LA",
+    siteName: SITE_NAME,
+    title: TITLE_DEFAULT,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: openGraphImageUrl(),
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} · ${SITE_TAGLINE}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE_DEFAULT,
+    description: SITE_DESCRIPTION,
+    images: [openGraphImageUrl()],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({

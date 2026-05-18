@@ -1,15 +1,46 @@
-﻿import { BLOG_POSTS } from "@/data/blog-posts";
+﻿import type { Metadata } from "next";
+
+import { BLOG_POSTS } from "@/data/blog-posts";
 import { BlogFeaturedPost } from "@/components/blog/BlogFeaturedPost";
 import { BlogPostGrid } from "@/components/blog/BlogPostGrid";
 import { NewsletterCTA } from "@/components/ui/NewsletterCTA";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { SiteHeader } from "@/components/ui/SiteHeader";
 import { getFeaturedPost, getSortedPosts } from "@/lib/blog-utils";
+import {
+  SITE_NAME,
+  absoluteUrl,
+  openGraphImageUrl,
+} from "@/lib/site-metadata";
 
-export const metadata = {
-  title: "Blog — Hack LATAM",
-  description:
-    "Guías prácticas sobre SPF, DMARC, HTTPS, superficie de ataque y postura defensiva para PYMEs en Latinoamérica.",
+const BLOG_TITLE = "Blog de ciberseguridad";
+const BLOG_DESCRIPTION =
+  "Guías prácticas sobre SPF, DMARC, HTTPS, superficie de ataque y postura defensiva para PYMEs en Latinoamérica.";
+
+export const metadata: Metadata = {
+  title: BLOG_TITLE,
+  description: BLOG_DESCRIPTION,
+  alternates: {
+    canonical: absoluteUrl("/blog"),
+  },
+  openGraph: {
+    url: absoluteUrl("/blog"),
+    title: `${BLOG_TITLE} | ${SITE_NAME}`,
+    description: BLOG_DESCRIPTION,
+    images: [
+      {
+        url: openGraphImageUrl(),
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} · ${BLOG_TITLE}`,
+      },
+    ],
+  },
+  twitter: {
+    title: `${BLOG_TITLE} | ${SITE_NAME}`,
+    description: BLOG_DESCRIPTION,
+    images: [openGraphImageUrl()],
+  },
 };
 
 export default function BlogPage() {
